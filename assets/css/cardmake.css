@@ -1,0 +1,147 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #fffaf8;
+	font-family: Arial, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.phone-frame {
+	width: 375px;
+	height: 812px;
+	border: 1px solid #ccc;
+	border-radius: 40px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	background-color: #FAF9F6;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 16px;
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+	font-weight: bold;
+	color: #ff6b6b;
+	font-size: 16px;
+}
+
+.header img {
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+
+.container {
+	padding: 20px;
+	overflow-y: auto;
+	flex: 1;
+}
+
+textarea,
+input {
+	width: 100%;
+	padding: 12px;
+	margin-bottom: 6px;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	font-size: 14px;
+	background-color: #F2EFEA;
+	box-sizing: border-box;
+	resize: none;
+}
+
+label {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.char-count {
+	font-size: 12px;
+	text-align: right;
+	margin-bottom: 10px;
+	color: #888;
+}
+
+.keyword-list,
+.strategy-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.keyword,
+.strategy {
+	border: 1px solid #ccc;
+	padding: 6px 12px;
+	border-radius: 20px;
+	cursor: pointer;
+	background-color: #f1f1f1;
+	font-size: 14px;
+	transition: background-color 0.2s, color 0.2s;
+}
+
+.keyword.selected,
+.strategy.selected {
+	background-color: #FF6B6B;
+	color: white;
+	border-color: #FF6B6B;
+}
+
+.counter {
+	text-align: right;
+	font-size: 12px;
+	margin-bottom: 10px;
+	color: #888;
+}
+
+.submit-btn {
+	width: 100%;
+	padding: 14px;
+	background-color: #ff6b6b;
+	color: white;
+	border: none;
+	border-radius: 12px;
+	cursor: pointer;
+	font-size: 16px;
+	margin-top: 16px;
+}
+
+.bottom-nav {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+	background-color: #FAF9F6;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.home-button {
+	background: none;
+	border: none;
+	text-align: center;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 12px;
+	color: #FF6B6B;
+}
+
+.home-button img {
+	width: 40px;
+	height: 36px;
+}

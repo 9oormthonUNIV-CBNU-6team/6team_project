@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>질문 카드 등록</title>
+	<link rel="stylesheet" href="assets/css/cardmake.css" />
+	<script defer src="js/cardmake.js"></script>
+</head>
+
+<body>
+	<div class="phone-frame">
+		<div class="header">
+			<img src="assets/images/go-back.png" onclick="history.back()" />
+			질문 카드 등록
+			<span style="width:20px;"></span>
+		</div>
+
+		<div class="container">
+			<label>질문 내용을 작성해 주세요.</label>
+			<textarea id="question_content" maxlength="30" rows="2"></textarea>
+			<div class="char-count" id="qc-count">0/30</div>
+
+			<label>기업명과 직무를 작성해 주세요.</label>
+			<label>기업명</label>
+			<input type="text" id="company_name" maxlength="30" />
+			<div class="char-count" id="cn-count">0/30</div>
+			<label>직무</label>
+			<input type="text" id="job" maxlength="30" />
+			<div class="char-count" id="job-count">0/30</div>
+
+			<label>당시의 상황 키워드를 선택해 주세요. (3가지)</label>
+			<div class="keyword-list" id="keyword-list">
+				<span class="keyword">딱딱한</span><span class="keyword">긍정적</span><span class="keyword">부정적</span>
+				<span class="keyword">다대일</span><span class="keyword">매서운</span><span class="keyword">자유로운</span>
+				<span class="keyword">다대다</span><span class="keyword">일대일</span><span class="keyword">조용한</span>
+				<span class="keyword">미소띤</span><span class="keyword">친절한</span><span class="keyword">돌보이는</span>
+				<div class="counter" id="keyword-count">0/3 선택됨</div>
+			</div>
+
+			<label>답변 전략을 선택해 주세요. (선택)</label>
+			<div class="strategy-list" id="strategy-list">
+				<span class="strategy">공손하게 회피</span>
+				<span class="strategy">유머 활용</span>
+				<span class="strategy">정면 돌파</span>
+				<span class="strategy">질문 재확인 후 답변</span>
+			</div>
+
+			<label>답변 내용을 작성해 주세요. (선택)</label>
+			<textarea id="answer_content" maxlength="30" rows="2"></textarea>
+			<div class="char-count" id="ans-count">0/30</div>
+
+			<button class="submit-btn" onclick="submitData()">등록하기</button>
+		</div>
+		<br><br><br><br>
+		<div class="bottom-nav">
+			<button class="home-button" onclick="location.href='mainpage.html'">
+				<img src="assets/images/HOME.png" alt="home" />
+			</button>
+		</div>
+	</div>
+</body>
+
+</html>
