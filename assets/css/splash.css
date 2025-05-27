@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.splash-screen {
+    background-color: #FF6B6B;
+    width: 90vw;
+    max-width: 390px;
+    height: 80vh;
+    max-height: 844px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    width: 26.5vw;
+    max-width: 100.55px;
+    height: auto;
+    max-height: 79px;
+    user-select: none;
+    pointer-events: none;
+}
