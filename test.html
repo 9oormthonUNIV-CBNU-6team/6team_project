@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>면접 유형 테스트</title>
+  <link rel="stylesheet" href="assets/test.css">
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <img src="assets/images/upbeat-logo.png" class="logo" alt="upbeat">
+    </header>
+
+    <div class="progress-bar">
+      <div class="progress" id="progressBar"></div>
+    </div>
+
+    <div class="step" id="step">1/10</div>
+    <div class="question" id="question"></div>
+
+    <div class="options">
+      <button class="option" id="btn1" onclick="nextQuestion(0)"></button>
+      <button class="option" id="btn2" onclick="nextQuestion(1)"></button>
+    </div>
+  </div>
+
+  <script src="js/test.js"></script>
+</body>
+</html>

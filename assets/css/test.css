@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  background: #fffaf8;
+  font-family: 'sans-serif';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.wrapper {
+  width: 390px;
+  height: 844px;
+  background: linear-gradient(to bottom, #fffaf8, #ffffff);
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  margin-bottom: 10px;
+}
+
+.logo {
+  height: 24px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: #f0eae5;
+  border-radius: 2px;
+  margin: 20px 0;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background: #FF6B6B;
+  transition: width 0.3s;
+  border-radius: 2px;
+}
+
+.step {
+  font-size: 14px;
+  color: #A19C91;
+  margin-bottom: 20px;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+
+.options {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.option {
+  background-color: #FF6B6B;
+  color: white;
+  font-size: 15px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.option:hover {
+  background-color: #e35555;
+}
+
+.result-msg {
+  margin-top: 200px;
+  font-size: 18px;
+  color: #333;
+  text-align: center;
+  font-weight: bold;
+}
