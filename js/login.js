@@ -13,7 +13,6 @@ function login() {
   pwError.textContent = "";
   idInput.classList.remove("error");
   pwInput.classList.remove("error");
-  loginBtn.classList.remove("active");
 
   if (!USERS[userId]) {
     idError.textContent = "존재하지 않는 아이디입니다";
@@ -26,7 +25,23 @@ function login() {
   }
 
   if (valid) {
-    // 로그인 성공 시 splash로 이동 (두 번째 스플래시)
     window.location.href = "login-splash.html?afterLogin=true";
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const idInput = document.getElementById("userId");
+  const pwInput = document.getElementById("password");
+  const loginBtn = document.getElementById("loginBtn");
+
+  function toggleLoginButton() {
+    if (idInput.value.trim() && pwInput.value.trim()) {
+      loginBtn.classList.add("active");
+    } else {
+      loginBtn.classList.remove("active");
+    }
+  }
+
+  idInput.addEventListener("input", toggleLoginButton);
+  pwInput.addEventListener("input", toggleLoginButton);
+});
