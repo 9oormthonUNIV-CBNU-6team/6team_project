@@ -1,0 +1,211 @@
+/* 전체 페이지를 화면 중앙에 배치 */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #FAF9F6;
+  font-family: 'Pretendard', 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* 모바일 프레임 */
+.phone-frame {
+  width: 390px;
+  height: 844px;
+  border-radius: 30px;
+  overflow: hidden;
+  background-color: #FAF9F6;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* 스크롤 가능한 콘텐츠 영역 */
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 0 64px 0;
+  background-color: #FAF9F6;
+}
+
+/* 헤더 고정 */
+.header {
+  position: sticky;
+  top: 0;
+  background-color: #FAF9F6;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+}
+
+/* 제목 영역 */
+.title-section {
+  text-align: center;
+  padding: 16px 20px 0;
+  background-color: #FAF9F6;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.main-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #222;
+  margin: 6px 0;
+}
+
+.character {
+  width: 180px;
+  margin: 20px auto;
+  display: block;
+}
+
+/* 실패 요인 */
+.failure-reason {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 20px 20px;
+  gap: 10px;
+  flex-wrap: wrap;
+  text-align: center;
+  background-color: #FAF9F6;
+}
+
+.failure-reason::before {
+  content: "실패 요인";
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  color: #888;
+  text-align: center;
+  margin-bottom: 10px;
+  display: block;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+}
+
+.reason-box {
+  flex: 1;
+  background-color: #F2EFEA;
+  font-size: 12px;
+  padding: 20px 10px;
+  border-radius: 10px;
+  color: #4c4444;
+  line-height: 1.3;
+}
+
+/* 설명 텍스트 */
+.description {
+  font-size: 16px;
+  color: #4c4444;
+  line-height: 1.6;
+  text-align: center;
+  margin: 0 24px 24px;
+  background-color: #FAF9F6;
+}
+
+/* TIP 영역 */
+.tip-section {
+  background-color: #FAF9F6;
+  padding: 0 20px 24px;
+}
+
+.tip-section h2 {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  color: #4C4444;
+  margin-bottom: 10px;
+}
+
+.tip-section .highlight {
+  color: #ff6b6b;
+}
+
+.tip-box {
+  background-color: #FAF9F6;
+  border: 2px dashed #ff6b6b;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.tip-box p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #444;
+  margin: 6px 0;
+}
+
+.tip-box strong {
+  color: #000;
+}
+
+.structure-btn {
+  display: inline-block;
+  background-color: #ff6b6b;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 8px 0;
+  text-align: center;
+}
+
+/* 버튼 */
+.buttons {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #FAF9F6;
+}
+
+.buttons button {
+  padding: 14px;
+  background-color: #ff6b6b;
+  color: #fff;
+  font-size: 14px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 하단 고정 HOME 아이콘 - 프레임 내부 하단에 고정 */
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 64px;
+  background-color: #fff;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-icon {
+  width: 36px;
+  height: auto;
+}
