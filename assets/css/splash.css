@@ -1,31 +1,40 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white; /* 전체 배경은 흰색 */
+  font-family: sans-serif;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.splash-screen {
-    background-color: #FF6B6B;
-    width: 90vw;
-    max-width: 390px;
-    height: 80vh;
-    max-height: 844px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+/* 가운데 Coral 화면 (390x844) */
+#splash {
+  width: 390px;
+  height: 844px;
+  background-color: #FF6B6B; /* Coral */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: opacity 300ms ease-out;
 }
 
+/* 로고 등장 애니메이션 */
 .logo {
-    width: 26.5vw;
-    max-width: 100.55px;
-    height: auto;
-    max-height: 79px;
-    user-select: none;
-    pointer-events: none;
+  width: 100px;
+  height: auto;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: fadeScaleIn 600ms ease-out 300ms forwards;
+}
+
+@keyframes fadeScaleIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
