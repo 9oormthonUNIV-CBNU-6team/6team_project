@@ -65,6 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // JWT 토큰 콘솔 출력
       const token = getToken();
       console.log("로그인 성공! JWT 토큰:", token);
+      // id와 userid를 콘솔에 출력
+      console.log("id:", userId);
+      console.log("userid:", response.userId);
 
       // 메인 페이지로 이동
       window.location.href = "mainpage.html";

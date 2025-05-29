@@ -27,8 +27,15 @@ body {
 .scrollable-content {
   flex: 1;
   overflow-y: auto;
-  padding: 0 0 64px 0;
+  padding-bottom: 80px;
   background-color: #FAF9F6;
+  -ms-overflow-style: none; /* IE, Edge 스크롤바 숨기기 */
+  scrollbar-width: none; /* Firefox 스크롤바 숨기기 */
+}
+
+/* Chrome, Safari 스크롤바 숨기기 */
+.scrollable-content::-webkit-scrollbar {
+  display: none;
 }
 
 /* 헤더 고정 */
@@ -208,4 +215,5 @@ footer {
 .home-icon {
   width: 36px;
   height: auto;
+  cursor: pointer;
 }

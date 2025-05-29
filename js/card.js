@@ -13,7 +13,6 @@ const cardData = {
 		{ text: "질문 재확인 후 답변", percent: 16 },
 	]
 };
-
 window.onload = () => {
 	document.getElementById('question').innerText = cardData.question;
 	document.getElementById('company').innerText = cardData.company;

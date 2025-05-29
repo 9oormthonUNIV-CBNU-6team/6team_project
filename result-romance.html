@@ -1,69 +1,106 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>upbeat</title>
-  <link rel="icon" href="assets/images/upbeat-fabicon.png" type="image/png">
-  <link rel="stylesheet" href="assets/css/result-test.css"></head>
-<body>
-  <div class="phone-frame">
-    
-    <div class="scrollable-content">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>upbeat</title>
+    <link rel="icon" href="assets/images/upbeat-fabicon.png" type="image/png" />
+    <link rel="stylesheet" href="assets/css/result-test.css" />
+  </head>
+  <body>
+    <div class="phone-frame">
+      <div class="scrollable-content">
+        <div class="header">
+          <img
+            src="assets/images/upbeat-logo.png"
+            alt="upbeat logo"
+            class="logo"
+          />
+        </div>
 
-      <div class="header">
-        <img src="assets/images/upbeat-logo.png" alt="upbeat logo" class="logo" />
+        <section class="title-section">
+          <p class="subtitle">말은 열정 넘치는데, 이 사람, 말이 좀 많네...</p>
+          <h1 class="main-title">“두루뭉술 낭만가형”</h1>
+          <img
+            src="assets/images/result-test-romance.png"
+            alt="캐릭터 이미지"
+            class="character"
+          />
+        </section>
+
+        <section class="failure-reason">
+          <div class="reason-box">추상적이고<br />뭉뚱그린 표현</div>
+          <div class="reason-box">말은 길지만<br />요지가 약함</div>
+          <div class="reason-box">직무 연관성<br />연결 부족</div>
+        </section>
+
+        <section class="description">
+          <p>
+            당신은 말이 많지만, 핵심이 약한 유형입니다.<br />
+            경험을 멋있게 말하고 싶어 하지만,<br />
+            정작 무엇이 대단한 건지 명확하게 전달되지 않을 때가 있습니다.
+          </p>
+          <p>
+            당신의 말에는 진심이 담겨 있지만,<br />
+            때때로 구조나 목적이 흐릿해 듣는 사람이<br />
+            내용을 따라가기 어려워질 수 있어요.<br />
+            따라서 면접관 입장에서는 호감은 느끼지만,<br />
+            “그래서 이 사람이 어떤 사람이지?”라는<br />
+            의문이 남게 됩니다.
+          </p>
+        </section>
+
+        <section class="tip-section">
+          <h2>
+            두루뭉술 낭만가형을 위한<br /><span class="highlight"
+              >업비트 면접 TIP!</span
+            >
+          </h2>
+          <div class="tip-box">
+            <p>
+              <strong
+                >당신의 말은 따뜻하지만,<br />지금은 구체적인 근거가
+                필요합니다.</strong
+              >
+            </p>
+            <div class="structure-btn">말에 "구조"를 입히세요.</div>
+            <p>
+              경험은 상황(S)-행동(A)-결과(R) 순으로 정리하고,<br />
+              직무와 연결 짓는 문장을 꼭 넣어보세요.<br />
+              말의 감정은 유지하되,<br />
+              '구체성'이 들어가야 설득됩니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="buttons">
+          <button onclick="goToPractice()">면접 연습 하러 가기</button>
+          <button onclick="goToAllTypes()">모든 결과 유형 보러 가기</button>
+        </section>
       </div>
 
-      <section class="title-section">
-        <p class="subtitle">말은 열정 넘치는데, 이 사람, 말이 좀 많네...</p>
-        <h1 class="main-title">“두루뭉술 낭만가형”</h1>
-        <img src="assets/images/result-test-romance.png" alt="캐릭터 이미지" class="character" />
-      </section>
-
-      <section class="failure-reason">
-        <div class="reason-box">추상적이고<br>뭉뚱그린 표현</div>
-        <div class="reason-box">말은 길지만<br>요지가 약함</div>
-        <div class="reason-box">직무 연관성<br>연결 부족</div>
-      </section>
-
-      <section class="description">
-        <p>당신은 말이 많지만, 핵심이 약한 유형입니다.<br/>
-          경험을 멋있게 말하고 싶어 하지만,<br/>
-          정작 무엇이 대단한 건지 명확하게 전달되지 않을 때가 있습니다.</p>
-        <p>당신의 말에는 진심이 담겨 있지만,<br/>
-          때때로 구조나 목적이 흐릿해 듣는 사람이<br/>
-          내용을 따라가기 어려워질 수 있어요.<br/>
-          따라서 면접관 입장에서는 호감은 느끼지만,<br/>
-          “그래서 이 사람이 어떤 사람이지?”라는<br/>
-          의문이 남게 됩니다.</p>
-      </section>
-
-      <section class="tip-section">
-        <h2>두루뭉술 낭만가형을 위한<br/><span class="highlight">업비트 면접 TIP!</span></h2>
-        <div class="tip-box">
-          <p><strong>당신의 말은 따뜻하지만,<br/>지금은 구체적인 근거가 필요합니다.</strong></p>
-          <div class="structure-btn">말에 “구조”를 입히세요.</div>
-          <p>경험은 상황(S)-행동(A)-결과(R) 순으로 정리하고,<br/>
-            직무와 연결 짓는 문장을 꼭 넣어보세요.<br/>
-            말의 감정은 유지하되,<br/>
-            '구체성'이 들어가야 설득됩니다.</p>
-        </div>
-      </section>
-
-      <section class="buttons">
-        <button onclick="goToPractice()">면접 연습 하러 가기</button>
-        <button onclick="goToAllTypes()">모든 결과 유형 보러 가기</button>
-      </section>
-
+      <footer>
+        <img
+          src="assets/images/HOME.png"
+          alt="홈 아이콘"
+          class="home-icon"
+          onclick="goHome()"
+        />
+      </footer>
     </div>
 
-    <footer>
-      <img src="assets/images/HOME.png" alt="홈 아이콘" class="home-icon" />
-    </footer>
+    <script>
+      function goToPractice() {
+        window.location.href = "test.html";
+      }
 
-  </div>
+      function goToAllTypes() {
+        window.location.href = "result-all.html";
+      }
 
-  <script src="assets/js/result-test.js"></script>
-</body>
+      function goHome() {
+        window.location.href = "mainpage.html";
+      }
+    </script>
+  </body>
 </html>

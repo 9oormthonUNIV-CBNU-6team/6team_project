@@ -57,10 +57,22 @@
     </div>
 
     <footer>
-      <img src="assets/images/HOME.png" alt="홈 아이콘" class="home-icon" />
+      <img src="assets/images/HOME.png" alt="홈 아이콘" class="home-icon" onclick="goHome()" />
     </footer>
   </div>
 
-  <script src="assets/js/result-test.js"></script>
+  <script>
+    function goToPractice() {
+      window.location.href = 'test.html';
+    }
+
+    function goToAllTypes() {
+      window.location.href = 'result-all.html';
+    }
+
+    function goHome() {
+      window.location.href = 'mainpage.html';
+    }
+  </script>
 </body>
 </html>

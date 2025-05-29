@@ -25,6 +25,154 @@
     </div>
   </div>
 
-  <script src="js/test.js"></script>
+  <script>
+    const BASE_URL = 'http://52.78.187.191:8080';
+    let currentQuestionIndex = 0;
+    let questions = [];
+    let userAnswers = [];
+    let token = localStorage.getItem('token'); // 로그인 시 저장된 토큰
+    const TOTAL_QUESTIONS = 10;
+
+    // 질문 목록 가져오기
+    async function fetchQuestions() {
+      try {
+        const response = await fetch(`${BASE_URL}/api/questions`);
+        const allQuestions = await response.json();
+        // 처음 10개의 질문만 선택
+        questions = allQuestions.slice(0, TOTAL_QUESTIONS);
+        displayQuestion();
+      } catch (error) {
+        console.error('질문을 가져오는데 실패했습니다:', error);
+      }
+    }
+
+    // 현재 질문 표시
+    function displayQuestion() {
+      if (currentQuestionIndex >= TOTAL_QUESTIONS) {
+        submitAllAnswers();
+        return;
+      }
+
+      const currentQuestion = questions[currentQuestionIndex];
+      document.getElementById('question').textContent = currentQuestion.question;
+      document.getElementById('step').textContent = `${currentQuestionIndex + 1}/${TOTAL_QUESTIONS}`;
+      
+      // 진행바 업데이트
+      const progress = ((currentQuestionIndex + 1) / TOTAL_QUESTIONS) * 100;
+      document.getElementById('progressBar').style.width = `${progress}%`;
+
+      // 옵션 버튼 텍스트 설정
+      document.getElementById('btn1').textContent = currentQuestion.options[0].content;
+      document.getElementById('btn2').textContent = currentQuestion.options[1].content;
+
+      // 버튼 활성화
+      document.getElementById('btn1').disabled = false;
+      document.getElementById('btn2').disabled = false;
+    }
+
+    // 다음 질문으로 이동 및 답변 저장
+    async function nextQuestion(optionIndex) {
+      // 버튼 비활성화 (중복 클릭 방지)
+      document.getElementById('btn1').disabled = true;
+      document.getElementById('btn2').disabled = true;
+
+      const currentQuestion = questions[currentQuestionIndex];
+      
+      try {
+        const response = await fetch(`${BASE_URL}/api/user-answers`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            questionId: currentQuestion.id,
+            optionId: currentQuestion.options[optionIndex].id
+          })
+        });
+
+        console.log('API 요청 정보:', {
+          url: `${BASE_URL}/api/user-answers`,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: {
+            questionId: currentQuestion.id,
+            optionId: currentQuestion.options[optionIndex].id
+          }
+        });
+
+        if (!response.ok) throw new Error('답변 저장 실패');
+        
+        currentQuestionIndex++;
+        displayQuestion();
+      } catch (error) {
+        console.error('답변 저장 중 오류 발생:', error);
+        // 에러 발생 시 버튼 다시 활성화
+        document.getElementById('btn1').disabled = false;
+        document.getElementById('btn2').disabled = false;
+      }
+    }
+
+    // 모든 답변 제출 후 결과 페이지로 이동
+    async function submitAllAnswers() {
+      try {
+        const userId = getUserIdFromToken(token);
+        const response = await fetch(`${BASE_URL}/api/user-answers/result/${userId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        console.log('결과 조회 API 요청 정보:', {
+          url: `${BASE_URL}/api/user-answers/result/${userId}`,
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        const result = await response.json();
+        redirectToResultPage(result.name);
+      } catch (error) {
+        console.error('결과 조회 중 오류 발생:', error);
+      }
+    }
+
+    // 결과 페이지로 리다이렉트
+    function redirectToResultPage(type) {
+      const resultPages = {
+        'BALANCE': 'result-balance.html',
+        'LOGIC': 'result-logic.html',
+        'FIXED': 'result-fixed.html',
+        'MENTAL': 'result-mental.html',
+        'ROMANCE': 'result-romance.html',
+        'SENSOR': 'result-sensor.html'
+      };
+      
+      const resultPage = resultPages[type] || 'result-balance.html';
+      window.location.href = resultPage;
+    }
+
+    // 토큰에서 userId 추출 (JWT 디코딩)
+    function getUserIdFromToken(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload).userId;
+      } catch (error) {
+        console.error('토큰 디코딩 실패:', error);
+        return null;
+      }
+    }
+
+    // 페이지 로드 시 질문 목록 가져오기
+    fetchQuestions();
+  </script>
 </body>
 </html>
