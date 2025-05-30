@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Upbeat</title>
+	<link rel="stylesheet" href="assets/css/card.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+	<div class="phone-frame">
+		<header class="card-header">
+			<img src="assets/images/go-back.png" class="go-back" onclick="location.href='cardpick.html'" />
+			<h1>면접 카드 게임</h1>
+			<img src="assets/images/card-detail.png" class="card-detail" onclick="toggleModal()" />
+		</header>
+
+		<main class="card-content">
+			<div class="card-tags">
+				<span class="tag" id="company"></span> | <span class="tag" id="position"></span>
+				<div class="keywords" id="keywords"></div>
+			</div>
+
+			<div class="question-box" id="question">질문 로딩 중...</div>
+
+			<div class="option-list" id="options"></div>
+
+			<!--선택지 클릭시 화면-->
+			<!--댓글 작성 영역-->
+			<div class="comment-section hidden" id="commentSection">
+				<label>저라면 이렇게 답변할래요!</label>
+				<textarea maxlength="30" oninput="updateCharCount()" id="userComment"></textarea>
+				<div class="comment-count" id="charCount">0/30</div>
+				<button class="submit-btn" id="submitBtn">작성하기</button>
+			</div>
+			<!--댓글 리스트-->
+			<div class="comment-list hidden" id="commentList">
+				로딩 중...
+			</div>
+			<button class="submit-btn" onclick="location.href='cardpick.html'">다른 카드 뽑으러 가기</button>
+			<br><br><br><br><br>
+		</main>
+
+		<!--홈버튼-->
+		<div class="bottom-fixed">
+			<div class="bottom-divider"></div>
+			<a href="mainpage.html">
+				<img src="assets/images/HOME.png" class="home-btn" />
+			</a>
+		</div>
+
+		<!--카드 제작-->
+		<button class="floating-btn" onclick="location.href='cardmake.html'">
+			<img src="assets/images/card-make.png" alt="카드 등록" /><br>
+			<span class="floating-label">카드 등록</span>
+		</button>
+
+		<!--카드 세부 정보-->
+		<div class="modal-overlay" id="modalOverlay" onclick="toggleModal()"></div>
+		<div class="card-modal" id="cardModal">
+			<h2>카드 세부 정보</h2>
+			<div class="detail-row"><strong>질문 내용</strong>
+				<p id="modalQuestion"></p>
+			</div>
+			<div class="detail-row"><strong>기업명</strong><span id="modalCompany"></span> </div>
+			<div class="detail-row"><strong>직무</strong><span id="modalPosition"></span></div>
+			<div class="detail-row"><strong>상황 키워드</strong><div id="modalKeywords"></div>
+			</div><div class="detail-row"><strong>답변 전략 (선택)</strong><div id="modalStrategy"></div>
+			</div><div class="detail-row"><strong>답변 내용 (선택)</strong><p id="modalAnswer"></p>
+			</div><button class="close-btn" onclick="toggleModal()">창 닫기</button>
+		</div>
+
+	</div>
+
+	<script>
+		const cardId = 123;
+		const likeKey = `liked-answers-${cardId}`;
+		const likedAnswers = new Set(JSON.parse(localStorage.getItem(likeKey) || '[]'));
+
+		let cardData = null;
+		let answers = [];
+
+		const fallbackData = {
+			question: "동기들 중 본인이 가장 낫다고 생각하는 점은 무엇인가요?",
+			company: "카카오",
+			position: "글로벌마케팅",
+			keywords: ["자유로운", "다대일", "긍정적"],
+			strategy: "공손하게 회피",
+			answer: "동기마다 강점이 달라 조심스럽습니다. 저는 성장하는 자세가 강점입니다.",
+			options: [
+				{ text: "공손하게 회피", percent: 21 },
+				{ text: "정면 돌파", percent: 55 },
+				{ text: "유머 활용", percent: 8 },
+				{ text: "질문 재확인 후 답변", percent: 16 },
+			],
+			answers: [
+				{
+					answerId: 1,
+					userNickname: "럭키님",
+					content: "저는 성장하는 자세가 강점입니다.",
+					createdAt: "2025-05-17T14:32:00",
+					likes: 21,
+					comments: []
+				}
+			]
+		};
+
+		async function fetchCardData() {
+			try {
+				const res = await fetch(`/api/cards/${cardId}/answer`);
+				if (!res.ok) throw new Error("API 호출 실패");
+
+				const data = await res.json();
+				cardData = {
+					question: data.question,
+					company: "미정", // API에 없으므로 임의 처리
+					position: "미정",
+					keywords: [],
+					strategy: "",
+					answer: "",
+					options: [], // 퍼센트는 별도 처리
+				};
+				answers = data.answers;
+			} catch (e) {
+				console.warn("API 실패. fallback 사용");
+				cardData = fallbackData;
+				answers = fallbackData.answers;
+			}
+			renderCard();
+		}
+
+		function renderCard() {
+			document.getElementById('question').innerText = cardData.question;
+			document.getElementById('company').innerText = cardData.company;
+			document.getElementById('position').innerText = cardData.position;
+			document.getElementById('keywords').innerHTML = cardData.keywords.map(k => `<span>${k}</span>`).join('');
+
+			const optionList = document.getElementById('options');
+			optionList.innerHTML = '';
+			if (cardData.options.length > 0) {
+				cardData.options.forEach((opt, index) => {
+					const btn = document.createElement('button');
+					btn.className = 'option-button';
+					btn.innerHTML = `
+          <div class="bar" style="width: 0%"></div>
+          <span>${opt.text}</span>
+          <span class="percent">${opt.percent}%</span>
+        `;
+					btn.onclick = () => {
+						optionList.classList.add('show-percent');
+						document.querySelectorAll('.option-list button').forEach((b, i) => {
+							const percent = cardData.options[i].percent;
+							b.querySelector('.bar').style.width = `${percent}%`;
+							b.classList.add(i === index ? 'selected' : 'unselected');
+							b.disabled = true;
+						});
+						document.getElementById('commentSection').classList.remove('hidden');
+					};
+					optionList.appendChild(btn);
+				});
+			} else {
+				document.getElementById('commentSection').classList.remove('hidden');
+			}
+
+			document.getElementById('modalQuestion').innerText = cardData.question;
+			document.getElementById('modalCompany').innerText = cardData.company;
+			document.getElementById('modalPosition').innerText = cardData.position;
+			document.getElementById('modalKeywords').innerHTML = cardData.keywords.map(k => `<span class="tag">${k}</span>`).join('');
+			document.getElementById('modalStrategy').innerHTML = `<span class="tag">${cardData.strategy}</span>`;
+			document.getElementById('modalAnswer').innerText = cardData.answer;
+		}
+
+		function toggleModal() {
+			document.getElementById('modalOverlay').classList.toggle('active');
+			document.getElementById('cardModal').classList.toggle('active');
+		}
+
+		function updateCharCount() {
+			const textarea = document.getElementById('userComment');
+			const count = textarea.value.length;
+			const submitBtn = document.getElementById('submitBtn');
+			document.getElementById('charCount').innerText = `${count}/30`;
+			submitBtn.disabled = count === 0 || count > 30;
+		}
+
+		document.getElementById('submitBtn').addEventListener('click', () => {
+			const container = document.getElementById("commentList");
+			if (container.classList.contains('loaded')) return;
+
+			container.innerHTML = ''; // "로딩 중..." 제거
+
+			answers.forEach((answer, index) => {
+				const card = document.createElement('div');
+				card.className = 'answer-card';
+
+				const likeBtnId = `like-btn-${index}`;
+				const likeImgId = `like-img-${index}`;
+				const likeCountId = `like-count-${index}`;
+				const isLiked = likedAnswers.has(answer.answerId);
+
+				card.innerHTML = `
+        <div class="answer-header">
+          <span><strong>${answer.userNickname}</strong></span>
+          <span>${formatDate(answer.createdAt)}</span>
+        </div>
+        <div class="answer-content">${answer.content}</div>
+        <div class="answer-footer">
+          <button class="like-btn" id="${likeBtnId}" onclick="handleLike(${cardId}, ${answer.answerId}, '${likeBtnId}', '${likeImgId}', '${likeCountId}')" ${isLiked ? 'disabled' : ''}>
+            <img src="assets/images/${isLiked ? 'like-after' : 'like-before'}.png" id="${likeImgId}" alt="like">
+            <span id="${likeCountId}">${answer.likes + (isLiked ? 1 : 0)}</span>
+          </button>
+        </div>
+      `;
+
+				// 댓글이 있을 경우 렌더링
+				if (answer.comments && answer.comments.length > 0) {
+					const commentWrap = document.createElement('div');
+					commentWrap.className = 'comment-wrap';
+					answer.comments.forEach(c => {
+						const comment = document.createElement('div');
+						comment.className = 'comment';
+						comment.innerHTML = `<span><strong>${c.userNickname}</strong></span> ${c.content}`;
+						commentWrap.appendChild(comment);
+					});
+					card.appendChild(commentWrap);
+				}
+
+				container.appendChild(card);
+			});
+
+			container.classList.add('loaded');
+			container.classList.remove('hidden');
+		});
+
+		function formatDate(dateStr) {
+			const d = new Date(dateStr);
+			return `${String(d.getFullYear()).slice(2)}.${(d.getMonth() + 1).toString().padStart(2, '0')}.${d.getDate().toString().padStart(2, '0')}`;
+		}
+
+		async function handleLike(cardId, answerId, btnId, imgId, countId) {
+			if (likedAnswers.has(answerId)) return;
+
+			try {
+				const res = await fetch(`/api/cards/${cardId}/like`, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ answerId })
+				});
+
+				if (!res.ok) throw new Error('좋아요 실패');
+
+				document.getElementById(imgId).src = 'assets/images/like-after.png';
+				document.getElementById(countId).textContent = parseInt(document.getElementById(countId).textContent) + 1;
+				document.getElementById(btnId).disabled = true;
+
+				likedAnswers.add(answerId);
+				localStorage.setItem(likeKey, JSON.stringify([...likedAnswers]));
+			} catch (err) {
+				alert('좋아요 실패: ' + err.message);
+			}
+		}
+
+		// 실행
+		fetchCardData();
+	</script>
+
+
+</body>
+
+</html>
