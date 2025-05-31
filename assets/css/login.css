@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
   margin: 0;
   background: #fffaf8;
@@ -123,3 +124,104 @@ form {
 .signup-btn:hover {
   background: #e35555;
 }
+=======
+
+@font-face {
+  font-family: 'Jalnan2';
+  src: url('./fonts/Jalnan2.woff') format('woff');
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  background-color: #FAF9F6;
+  font-family: 'Jalnan2', sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+}
+
+.logo {
+  width: 60px;
+  height: 47px;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-box {
+  width: 325px;
+  height: 44px;
+  padding: 10px 15px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  border: 1.2px solid #4C4444;
+  font-size: 14px;
+  background-color: white;
+}
+
+.input-box.error {
+  border-color: red;
+}
+
+.error-text {
+  color: red;
+  font-size: 13px;
+  margin: 0 0 10px 5px;
+}
+
+.start-btn, .signup-btn {
+  width: 340px;
+  height: 57px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.start-btn {
+  background-color: #A19C91;
+}
+
+.signup-btn {
+  background-color: #FF6B6B;
+}
+
+.start-btn.active {
+  background-color: #FF6B6B; /* 로그인 성공 시 버튼 색 바뀜 */
+}
+
+.or-text {
+  margin: 15px 0 0;
+  color: #A19C91;
+}
+
+/* Splash 화면 전용 */
+.splash-body {
+  background-color: #FF6B6B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.splash-logo {
+  width: 100px;
+  height: auto;
+}
+>>>>>>> 57a47d9bbe70a49763594dffbb38e772d5f996c0

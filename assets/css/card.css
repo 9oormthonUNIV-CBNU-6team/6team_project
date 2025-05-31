@@ -103,21 +103,28 @@ body {
 	z-index: 1;
 }
 
-.option-list button .bar {
+
+.option-button .bar {
 	position: absolute;
 	top: 0;
 	left: 0;
 	height: 100%;
-	z-index: 0;
-	transition: width 0.3s ease;
-}
-
-.option-list button.selected .bar {
+	width: 0%;
 	background-color: #a7d1ff;
+	opacity: 0.3;
+	border-radius: 8px 0 0 8px;
+	transition: width 0.3s ease;
+	z-index: 0;
 }
 
-.option-list button.unselected .bar {
+.option-button.selected .bar {
+	background-color: #a7d1ff;
+	opacity: 0.3;
+}
+
+.option-button.unselected .bar {
 	background-color: #e0ddd8;
+	opacity: 0.2;
 }
 
 .option-list button span {
@@ -137,7 +144,6 @@ body {
 	display: inline-block;
 }
 
-/*다른 카드 뽑으러 가기*/
 .submit-btn {
 	width: 100%;
 	background: #ff6b6b;
@@ -150,7 +156,7 @@ body {
 	cursor: pointer;
 }
 
-/*textarea*/
+/* textarea */
 .comment-section {
 	margin-top: 16px;
 }
@@ -189,7 +195,7 @@ body {
 	cursor: not-allowed;
 }
 
-/*댓글 리스트*/
+/* 댓글 리스트 */
 .answer-card {
 	background: #fff;
 	border-radius: 12px;
@@ -238,7 +244,7 @@ body {
 	opacity: 0.6;
 }
 
-/*하단 바*/
+/* 하단 바 */
 .bottom-fixed {
 	position: absolute;
 	bottom: 0;
@@ -256,7 +262,7 @@ body {
 	margin: 10px 0;
 }
 
-/*카드 등록 버튼*/
+/* 카드 등록 버튼 */
 .floating-btn {
 	position: absolute;
 	bottom: 80px;
@@ -283,7 +289,7 @@ body {
 	line-height: 1;
 }
 
-/*카드 상세 정보*/
+/* 카드 상세 정보 */
 .modal-overlay {
 	position: absolute;
 	inset: 0;

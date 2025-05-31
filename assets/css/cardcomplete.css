@@ -1,0 +1,107 @@
+/* 전체 화면 중앙 정렬 */
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #FAF9F6;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-family: Arial, sans-serif;
+}
+
+/* 고정된 phone-frame 스타일 */
+.phone-frame {
+	width: 375px;
+	height: 812px;
+	border: 1px solid #ccc;
+	border-radius: 40px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	background-color: #FAF9F6;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+/* 로고 영역 */
+.header {
+	padding: 24px 24px 0;
+	text-align: center;
+}
+
+/* 로고 이미지 */
+.logo {
+	width: 140px;
+	margin-bottom: 8px;
+}
+
+/* Divider */
+.divider {
+	height: 1px;
+	background-color: #e0e0e0;
+	margin: 10px 0 24px;
+	width: 100%;
+}
+
+/* 콘텐츠 영역 */
+.content {
+	padding: 0 24px;
+	flex: 1;
+	text-align: center;
+}
+
+/* 제목 */
+.content h2 {
+	font-size: 20px;
+	margin: 0;
+	line-height: 1.4;
+	font-weight: bold;
+}
+
+/* 서브텍스트 */
+.content .sub {
+	font-size: 16px;
+	color: #777;
+	margin: 8px 0 24px;
+}
+
+/* 토끼 이미지 */
+.bunny {
+	width: 200px;
+	margin-bottom: 32px;
+}
+
+/* 홈 버튼 */
+.home-btn {
+	background-color: #FB6B6B; /* ✅ 변경된 색상 */
+	color: white;
+	border: none;
+	padding: 18px 0;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 12px;
+	width: 100%;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.home-btn:hover {
+	background-color: #e35858;
+}
+
+/* 하단 네비게이션 */
+.bottom-nav {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	border-top: 1px solid #ccc;
+	padding: 12px 0;
+	text-align: center;
+	background-color: #FAF9F6;
+}
+
+.bottom-nav img {
+	width: 45px;
+	height: 40px;
+}
