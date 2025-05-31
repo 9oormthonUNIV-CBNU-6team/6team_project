@@ -46,9 +46,10 @@
     </style>
   </head>
   <body>
-    <!-- 스플래시 화면 -->
-    <div id="splash" style="display: none">
-      <img src="assets/images/logo.png" alt="Logo" class="logo" />
+    <div id="splash-wrapper" style="display: none">
+      <div id="splash" class="splash-screen">
+        <img src="assets/images/logo.png" alt="Logo" class="logo" />
+      </div>
     </div>
 
     <div class="phone-frame" id="mainContent">
@@ -148,7 +149,6 @@
       const BASE_URL = "http://52.78.187.191:8080";
       const token = localStorage.getItem("token");
 
-      // 페이지 로드 시 슬라이드 인 애니메이션 적용
       document.addEventListener("DOMContentLoaded", () => {
         const mainContent = document.getElementById("mainContent");
         mainContent.classList.add("slide-in");
@@ -180,10 +180,10 @@
 
       function goHomeWithSplash() {
         const mainContent = document.getElementById("mainContent");
-        const splash = document.getElementById("splash");
+        const splashWrapper = document.getElementById("splash-wrapper");
 
         mainContent.style.display = "none";
-        splash.style.display = "flex";
+        splashWrapper.style.display = "flex";
 
         setTimeout(() => {
           window.location.href = "mainpage.html";
