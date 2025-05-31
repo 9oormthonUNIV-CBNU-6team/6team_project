@@ -1,9 +1,12 @@
+import { loadSplash } from "./splash-loader.js";
 import { login as loginApi } from "./api/auth.js";
 import { getToken } from "./api/config.js";
 
 const BASE_URL = "http://52.78.187.191:8080";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadSplash(); // splash 불러오기
+
   const splashWrapper = document.getElementById("splash-wrapper");
   const splashScreen = document.getElementById("splash");
   const loginContent = document.getElementById("loginContent");
@@ -15,17 +18,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const idError = document.getElementById("idError");
   const pwError = document.getElementById("pwError");
 
+  // splash → login 전환
   setTimeout(() => {
     splashScreen.style.opacity = "0";
-
     setTimeout(() => {
-      if (splashWrapper) splashWrapper.remove(); // splash 완전 제거
+      splashWrapper.remove();
       loginContent.style.display = "block";
       loginContent.style.opacity = "1";
-    }, 300); // fade out duration
-  }, 2000); // splash delay
+    }, 300);
+  }, 2000);
 
-  // 입력 필드 변경 감지
+  // 입력 감지
   function checkInputs() {
     const isFormFilled =
       userIdInput.value.trim() !== "" && passwordInput.value.trim() !== "";
@@ -35,14 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
   userIdInput.addEventListener("input", checkInputs);
   passwordInput.addEventListener("input", checkInputs);
 
-  // 에러 표시 함수
   function showError(field, errorElement, message) {
     field.classList.add("error");
     errorElement.textContent = message;
     errorElement.classList.add("visible");
   }
 
-  // 에러 초기화 함수
   function clearErrors() {
     userIdInput.classList.remove("error");
     passwordInput.classList.remove("error");
@@ -52,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
     pwError.textContent = "";
   }
 
-  // 회원가입 버튼 클릭 시
   signupBtn.addEventListener("click", () => {
     window.location.href = "signup.html";
   });
@@ -67,9 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(`${BASE_URL}/api/users/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, password }),
       });
 
@@ -78,17 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         localStorage.setItem("token", data.token);
 
-        // 로그인 화면 페이드 아웃
-        loginContent.style.opacity = "0";
-
-        const splashWrapperEl = document.createElement("div");
-        splashWrapperEl.id = "splash-wrapper";
-        splashWrapperEl.innerHTML = `
-          <div id="splash" class="splash-screen">
-            <img src="assets/images/logo.png" alt="Logo" class="logo" />
-          </div>
-        `;
-        document.body.appendChild(splashWrapperEl);
+        // splash 재사용
+        await loadSplash();
 
         setTimeout(() => {
           window.location.href = "mainpage.html";

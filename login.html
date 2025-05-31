@@ -4,17 +4,12 @@
     <meta charset="UTF-8" />
     <title>Upbeat</title>
     <link rel="icon" href="assets/images/upbeat-fabicon.png" type="image/png" />
+    
     <link rel="stylesheet" href="assets/css/login.css" />
     <link rel="stylesheet" href="assets/css/splash.css" />
   </head>
   <body>
-    <div id="splash-wrapper">
-      <div id="splash" class="splash-screen">
-        <img src="assets/images/logo.png" alt="Logo" class="logo" />
-      </div>
-    </div>
 
-    <!-- 로그인 화면 -->
     <div id="loginContent" style="display: none;">
       <div class="login-frame">
         <img src="assets/images/upbeat-fabicon.png" alt="logo" class="logo" />
@@ -22,11 +17,23 @@
 
         <form id="loginForm">
           <div class="input-group">
-            <input type="text" id="userId" placeholder="아이디 입력" class="input-box" autocomplete="username" />
+            <input
+              type="text"
+              id="userId"
+              placeholder="아이디 입력"
+              class="input-box"
+              autocomplete="username"
+            />
             <p id="idError" class="error-text"></p>
           </div>
           <div class="input-group">
-            <input type="password" id="password" placeholder="비밀번호 입력" class="input-box" autocomplete="current-password" />
+            <input
+              type="password"
+              id="password"
+              placeholder="비밀번호 입력"
+              class="input-box"
+              autocomplete="current-password"
+            />
             <p id="pwError" class="error-text"></p>
           </div>
           <button type="submit" class="start-btn" id="loginBtn">시작하기</button>
