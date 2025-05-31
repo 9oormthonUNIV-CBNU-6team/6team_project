@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const idError = document.getElementById("idError");
   const pwError = document.getElementById("pwError");
 
-  // ✅ 초기 스플래시 화면 표시 후 로그인 화면으로 전환
   setTimeout(() => {
     splashScreen.style.opacity = "0";
 
@@ -58,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "signup.html";
   });
 
-  // ✅ 로그인 폼 제출 시
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     clearErrors();
@@ -83,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // 로그인 화면 페이드 아웃
         loginContent.style.opacity = "0";
 
-        // ✅ splash-wrapper 다시 만들어서 붙이기
         const splashWrapperEl = document.createElement("div");
         splashWrapperEl.id = "splash-wrapper";
         splashWrapperEl.innerHTML = `
@@ -93,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
         document.body.appendChild(splashWrapperEl);
 
-        // ✅ 로딩 효과 주기
         setTimeout(() => {
           window.location.href = "mainpage.html";
         }, 2000);
