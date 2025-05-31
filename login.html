@@ -4,42 +4,51 @@
     <meta charset="UTF-8" />
     <title>Upbeat</title>
     <link rel="icon" href="assets/images/logo-red.png" type="image/png" />
-    
+
     <link rel="stylesheet" href="assets/css/login.css" />
     <link rel="stylesheet" href="assets/css/splash.css" />
   </head>
   <body>
-
-    <div id="loginContent" style="display: none;">
+    <div id="loginContent" style="display: none">
       <div class="login-frame">
-        <img src="assets/images/logo-red.png" alt="logo" class="logo" />
-        <h1 class="title">로그인</h1>
+        <div class="header"></div>
 
-        <form id="loginForm">
-          <div class="input-group">
-            <input
-              type="text"
-              id="userId"
-              placeholder="아이디 입력"
-              class="input-box"
-              autocomplete="username"
-            />
-            <p id="idError" class="error-text"></p>
-          </div>
-          <div class="input-group">
-            <input
-              type="password"
-              id="password"
-              placeholder="비밀번호 입력"
-              class="input-box"
-              autocomplete="current-password"
-            />
-            <p id="pwError" class="error-text"></p>
-          </div>
-          <button type="submit" class="start-btn" id="loginBtn">시작하기</button>
-          <p class="or-text">또는</p>
-          <button type="button" class="signup-btn" id="signupBtn">회원가입</button>
-        </form>
+        <div class="main-content">
+          <img src="assets/images/logo-red.png" alt="logo" class="logo" />
+          <h1 class="title">로그인</h1>
+
+          <form id="loginForm">
+            <div class="input-group">
+              <input
+                type="text"
+                id="userId"
+                placeholder="아이디 입력"
+                class="input-box"
+                autocomplete="username"
+              />
+              <p id="idError" class="error-text"></p>
+            </div>
+            <div class="input-group">
+              <input
+                type="password"
+                id="password"
+                placeholder="비밀번호 입력"
+                class="input-box"
+                autocomplete="current-password"
+              />
+              <p id="pwError" class="error-text"></p>
+            </div>
+            <button type="submit" class="start-btn" id="loginBtn">
+              시작하기
+            </button>
+            <p class="or-text">또는</p>
+            <button type="button" class="signup-btn" id="signupBtn">
+              회원가입
+            </button>
+          </form>
+        </div>
+
+        <div class="footer"></div>
       </div>
     </div>
 
