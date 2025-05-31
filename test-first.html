@@ -1,29 +1,111 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=390, initial-scale=1.0, user-scalable=no" />
-  <title>upbeat</title>
-  <link rel="icon" href="assets/images/upbeat-fabicon.png" type="image/png" />
-  <link rel="stylesheet" href="assets/css/test-first.css" />
-</head>
-<body>
-  <div class="phone-frame">
-    <header class="header">
-      <img src="assets/images/upbeat-logo.png" alt="upbeat logo" class="logo" />
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=390, initial-scale=1.0, user-scalable=no"
+    />
+    <title>upbeat</title>
+    <link rel="icon" href="assets/images/upbeat-fabicon.png" type="image/png" />
+    <link rel="stylesheet" href="assets/css/test-first.css" />
+    <link rel="stylesheet" href="assets/css/splash.css" />
+    <style>
+      .slide-out {
+        animation: slideOut 0.5s ease-in-out forwards;
+      }
 
-    <main class="main-content">
-      <h1 class="main-title">
-        내 면접 유형은<br>무엇일까?
-      </h1>
-      <img src="assets/images/test-first.png" alt="면접유형 캐릭터" class="character-img" />
-      <button class="start-btn">시작하기</button>
-    </main>
+      @keyframes slideOut {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(100%);
+        }
+      }
 
-    <footer>
-      <img src="assets/images/HOME.png" alt="홈 아이콘" class="home-icon" />
-    </footer>
-  </div>
-</body>
+      .back-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        z-index: 10;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 스플래시 화면 -->
+    <div id="splash" style="display: none">
+      <img src="assets/images/logo.png" alt="Logo" class="logo" />
+    </div>
+
+    <!-- 메인 컨텐츠 -->
+    <div id="mainContent">
+      <div class="phone-frame">
+        <header class="header">
+          <img
+            src="assets/images/go-back.png"
+            alt="뒤로가기"
+            class="back-btn"
+            onclick="goBack()"
+          />
+          <img
+            src="assets/images/upbeat-logo.png"
+            alt="upbeat logo"
+            class="logo"
+          />
+        </header>
+
+        <main class="main-content">
+          <h1 class="main-title">내 면접 유형은<br />무엇일까?</h1>
+          <img
+            src="assets/images/test-first.png"
+            alt="면접유형 캐릭터"
+            class="character-img"
+          />
+          <button class="start-btn" onclick="startTest()">시작하기</button>
+        </main>
+
+        <footer>
+          <img
+            src="assets/images/HOME.png"
+            alt="홈 아이콘"
+            class="home-icon"
+            onclick="goHome()"
+          />
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      function startTest() {
+        window.location.href = "test.html";
+      }
+
+      function goHome() {
+        // 메인 컨텐츠 숨기기
+        document.getElementById("mainContent").style.display = "none";
+
+        // 스플래시 화면 표시
+        const splash = document.getElementById("splash");
+        splash.style.display = "flex";
+
+        // 2초 후 메인페이지로 이동
+        setTimeout(() => {
+          window.location.href = "mainpage.html";
+        }, 2000);
+      }
+
+      function goBack() {
+        const mainContent = document.getElementById("mainContent");
+        mainContent.classList.add("slide-out");
+
+        setTimeout(() => {
+          window.location.href = "mainpage.html";
+        }, 500);
+      }
+    </script>
+  </body>
 </html>

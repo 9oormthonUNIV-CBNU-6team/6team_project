@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://52.78.187.191:8080";
+const API_BASE_URL = "https://upbeat.io.kr";
 
 // 토큰 관련 함수들
 const getToken = () => localStorage.getItem("token");

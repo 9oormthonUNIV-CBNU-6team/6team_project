@@ -1,80 +1,123 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>upbeat</title>
-  <link rel="icon" href="assets/images/upbeat-fabicon.png" type="image/png">
-  <link rel="stylesheet" href="assets/css/result-test.css"></head>
-</head>
-<body>
-  <div class="phone-frame">
-    <div class="scrollable-content">
-      <div class="header">
-        <img src="assets/images/upbeat-logo.png" alt="upbeat logo" class="logo" />
-      </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>upbeat</title>
+    <link rel="icon" href="assets/images/upbeat-fabicon.png" type="image/png" />
+    <link rel="stylesheet" href="assets/css/result-test.css" />
+    <link rel="stylesheet" href="assets/css/splash.css" />
+    <style>
+      .slide-in {
+        animation: slideIn 0.5s ease-in-out forwards;
+      }
 
-      <section class="title-section">
-        <p class="subtitle">잘 외웠다, 근데 대화는 아니야.</p>
-        <h1 class="main-title">"시나리오 고정러형"</h1>
-        <img src="assets/images/result-test-fixed.png" alt="캐릭터 이미지" class="character" />
-      </section>
+      @keyframes slideIn {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
 
-      <section class="failure-reason">
-        <div class="reason-box">준비된<br>답변만 반복</div>
-        <div class="reason-box">즉흥적으로<br>대응 불가</div>
-        <div class="reason-box">인간적인<br>유연성 부족</div>
-      </section>
-
-      <section class="description">
-        <p>당신은 나무 잘 준비해서<br/>
-          오히려 자연스러움을 잃는 유형입니다.</p>
-        <p>질문과 상관없이 외운 문장을 말하거나,<br/>
-          대화를 한다기보다<br/>
-          준비된 발표를 이어가는 경우가 많습니다.</p>
-        <p>면접관은 당신의 태도나 답변에서<br/>
-          인위적인 느낌을 받을 수 있어요.<br/>
-          말을 조심스럽게 골라 하거나<br/>
-          준비한 표현을 그대로 전달하려는 모습이<br/>
-          계산된 듯한 인상을 줄 수 있죠.</p>
-      </section>
-
-      <section class="tip-section">
-        <h2>시나리오 고정러형을 위한<br/><span class="highlight">업비트 면접 TIP!</span></h2>
-        <div class="tip-box">
-          <p><strong>잘 외우는 것보다,<br/>잘 듣는 것이 중요합니다.</strong></p>
-          <div class="structure-btn">키워드 위주로 스토리를 조절해보세요.</div>
-          <p>각은 내려놓아도<br/>
-            질문에 맞춰 답하는 방식이<br/>
-            달라야 실력이의 성과다.<br/>
-            자연스럽게 답하려면,<br/>
-            스스로도 편해야 합니다.</p>
-        </div>
-      </section>
-
-      <section class="buttons">
-        <button onclick="goToPractice()">면접 연습 하러 가기</button>
-        <button onclick="goToAllTypes()">모든 결과 유형 보러 가기</button>
-      </section>
+      #splash .logo {
+        width: 100.55px;
+        height: 79px;
+        position: absolute;
+        top: 383px;
+        left: 144.73px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 스플래시 화면 -->
+    <div id="splash" class="splash-screen" style="display: none">
+      <img src="assets/images/logo.png" alt="Logo" class="logo" />
     </div>
 
-    <footer>
-      <img src="assets/images/HOME.png" alt="홈 아이콘" class="home-icon" onclick="goHome()" />
-    </footer>
-  </div>
+    <div class="phone-frame" id="mainContent">
+      <div class="scrollable-content">
+        <div class="header">
+          <img
+            src="assets/images/upbeat-logo.png"
+            alt="upbeat logo"
+            class="logo"
+          />
+        </div>
 
-  <script>
-    function goToPractice() {
-      window.location.href = 'test.html';
-    }
+        <section class="title-section">
+          <p class="subtitle">잘 외웠다, 근데 대화는 아니야.</p>
+          <h1 class="main-title">"시나리오 고정러형"</h1>
+          <img
+            src="assets/images/result-test-fixed.png"
+            alt="캐릭터 이미지"
+            class="character"
+          />
+        </section>
 
-    function goToAllTypes() {
-      window.location.href = 'result-all.html';
-    }
+        <section class="failure-reason">
+          <div class="reason-box">준비된<br />답변만 반복</div>
+          <div class="reason-box">즉흥적으로<br />대응 불가</div>
+          <div class="reason-box">인간적인<br />유연성 부족</div>
+        </section>
 
-    function goHome() {
-      window.location.href = 'mainpage.html';
-    }
-  </script>
-</body>
+        <section class="description">
+          <p>
+            당신은 너무 잘 준비해서<br />
+            오히려 자연스러움을 잃는 유형입니다.<br />
+            질문과 상관없이 외운 문장을 말하거나,<br />
+            대화를 한다기보단<br />
+            혼자만의 발표를 이어가는 경우가 많습니다.
+          </p>
+          <p>
+            면접관은 당신의 태도나 말투에서<br />
+            인위적인 느낌을 받을 수 있어요.<br />
+            말을 조심스럽게 골라 하거나<br />
+            준비한 표현을 그대로 전달하려는 모습이<br />
+            계산된 듯한 인상을 줄 수 있죠.
+          </p>
+        </section>
+
+        <section class="tip-section">
+          <h2>
+            시나리오 고정러형을 위한<br />
+            <b>업비트 면접 TIP!</b>
+          </h2>
+          <div class="tip-box">
+            <p>
+              "잘 외우는 것보다,<br />
+              잘 듣는 것이 중요합니다."
+            </p>
+            <div class="structure-btn">
+              키워드 위주로 스토리를 조립해보세요.
+            </div>
+            <p>
+              같같은 내려놓아도<br />
+              질문에 맞춰 답하는 방식이<br />
+              달라야 실력이의 성과다.<br />
+              자연스럽게 답하려면,<br />
+              스스로도 편해야 합니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="buttons">
+          <button onclick="goToAllResults()">모든 결과유형 보러가기</button>
+          <button onclick="goToPractice()">면접 연습하러 가기</button>
+        </section>
+      </div>
+
+      <footer>
+        <img
+          src="assets/images/HOME.png"
+          alt="홈 아이콘"
+          class="home-icon"
+          onclick="goHome()"
+        />
+      </footer>
+    </div>
+
+    <script src="js/result-type.js"></script>
+  </body>
 </html>
