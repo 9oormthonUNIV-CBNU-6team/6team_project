@@ -4,7 +4,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   background-color: white; /* 전체 배경은 흰색 */
-  font-family: sans-serif;
+  font-family: 'Pretendard', 'Arial', sans-serif;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -19,22 +19,8 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 28px;           /* 로그인 등과 동일하게 */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   position: relative;
   transition: opacity 300ms ease-out;
-}
-
-/* 로고 등장 애니메이션 */
-.logo {
-  width: 100px;
-  height: auto;
-  opacity: 0;
-  transform: scale(0.8);
-  animation: fadeScaleIn 600ms ease-out 300ms forwards;
-}
-
-@keyframes fadeScaleIn {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
 }

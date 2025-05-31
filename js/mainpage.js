@@ -10,11 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
   logoutButton.addEventListener("click", showLogoutPopup);
 
   // 카드 클릭 이벤트
-  document.getElementById("testCard").addEventListener("click", () => {
-    window.location.href = "test.html";
+  const testCard = document.getElementById("testCard");
+  const gameCard = document.getElementById("gameCard");
+
+  testCard.addEventListener("click", () => {
+    window.location.href = "test-first.html";
   });
 
-  document.getElementById("gameCard").addEventListener("click", () => {
+  gameCard.addEventListener("click", () => {
     window.location.href = "cardpick.html";
   });
 

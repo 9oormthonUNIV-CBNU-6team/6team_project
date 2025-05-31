@@ -1,34 +1,55 @@
 import { login as loginApi } from "./api/auth.js";
 import { getToken } from "./api/config.js";
 
+const BASE_URL = "http://52.78.187.191:8080";
+
 document.addEventListener("DOMContentLoaded", () => {
+  const splashScreen = document.getElementById("splash");
+  const loginContent = document.getElementById("loginContent");
   const loginForm = document.getElementById("loginForm");
-  const idInput = document.getElementById("userId");
-  const pwInput = document.getElementById("password");
+  const userIdInput = document.getElementById("userId");
+  const passwordInput = document.getElementById("password");
   const loginBtn = document.getElementById("loginBtn");
   const signupBtn = document.getElementById("signupBtn");
   const idError = document.getElementById("idError");
   const pwError = document.getElementById("pwError");
 
-  // 입력 필드 변경 시 버튼 활성화 상태 업데이트
-  function toggleLoginButton() {
-    if (idInput.value.trim() && pwInput.value.trim()) {
-      loginBtn.classList.add("active");
-    } else {
-      loginBtn.classList.remove("active");
-    }
+  // 초기 스플래시 화면 표시 후 로그인 화면으로 전환 (2초)
+  setTimeout(() => {
+    splashScreen.style.opacity = "0";
+    setTimeout(() => {
+      splashScreen.style.display = "none";
+      loginContent.style.display = "block";
+      loginContent.style.opacity = "1";
+    }, 300);
+  }, 2000);
+
+  // 입력 필드 변경 감지
+  function checkInputs() {
+    const isFormFilled =
+      userIdInput.value.trim() !== "" && passwordInput.value.trim() !== "";
+    loginBtn.classList.toggle("active", isFormFilled);
   }
 
-  // 입력 필드 이벤트 리스너
-  idInput.addEventListener("input", () => {
-    idError.textContent = "";
-    toggleLoginButton();
-  });
+  userIdInput.addEventListener("input", checkInputs);
+  passwordInput.addEventListener("input", checkInputs);
 
-  pwInput.addEventListener("input", () => {
+  // 에러 표시 함수
+  function showError(field, errorElement, message) {
+    field.classList.add("error");
+    errorElement.textContent = message;
+    errorElement.classList.add("visible");
+  }
+
+  // 에러 초기화 함수
+  function clearErrors() {
+    userIdInput.classList.remove("error");
+    passwordInput.classList.remove("error");
+    idError.classList.remove("visible");
+    pwError.classList.remove("visible");
+    idError.textContent = "";
     pwError.textContent = "";
-    toggleLoginButton();
-  });
+  }
 
   // 회원가입 버튼 클릭 시
   signupBtn.addEventListener("click", () => {
@@ -38,48 +59,49 @@ document.addEventListener("DOMContentLoaded", () => {
   // 로그인 폼 제출 시
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    clearErrors();
 
-    const userId = idInput.value.trim();
-    const password = pwInput.value;
-
-    // 입력값 검증
-    if (!userId) {
-      idError.textContent = "아이디를 입력해주세요.";
-      return;
-    }
-    if (!password) {
-      pwError.textContent = "비밀번호를 입력해주세요.";
-      return;
-    }
+    const userId = userIdInput.value;
+    const password = passwordInput.value;
 
     try {
-      const response = await loginApi({
-        userId: userId,
-        password: password,
+      const response = await fetch(`${BASE_URL}/api/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, password }),
       });
 
-      // 로그인 성공 시 사용자 정보 저장
-      localStorage.setItem("userId", response.userId);
-      localStorage.setItem("nickname", response.nickname);
+      const data = await response.json();
 
-      // JWT 토큰 콘솔 출력
-      const token = getToken();
-      console.log("로그인 성공! JWT 토큰:", token);
-      // id와 userid를 콘솔에 출력
-      console.log("id:", userId);
-      console.log("userid:", response.userId);
+      if (response.ok) {
+        localStorage.setItem("token", data.token);
 
-      // 메인 페이지로 이동
-      window.location.href = "mainpage.html";
-    } catch (error) {
-      // 로그인 실패 시 에러 메시지 표시
-      if (error.message.includes("아이디")) {
-        idError.textContent = error.message;
-      } else if (error.message.includes("비밀번호")) {
-        pwError.textContent = error.message;
+        // 로그인 화면 페이드 아웃
+        loginContent.style.opacity = "0";
+
+        // 스플래시 화면 표시
+        splashScreen.style.display = "flex";
+        splashScreen.style.opacity = "1";
+
+        // 2초 후 메인페이지로 이동
+        setTimeout(() => {
+          window.location.href = "mainpage.html";
+        }, 2000);
       } else {
-        idError.textContent = "로그인에 실패했습니다.";
+        if (data.message.includes("존재하지 않는")) {
+          showError(userIdInput, idError, "존재하지 않는 아이디입니다.");
+        } else {
+          showError(
+            passwordInput,
+            pwError,
+            "입력한 비밀번호가 일치하지 않습니다."
+          );
+        }
       }
+    } catch (error) {
+      console.error("로그인 오류:", error);
     }
   });
 });

@@ -6,9 +6,37 @@
     <title>upbeat</title>
     <link rel="icon" href="assets/images/upbeat-fabicon.png" type="image/png" />
     <link rel="stylesheet" href="assets/css/result-test.css" />
+    <link rel="stylesheet" href="assets/css/splash.css" />
+    <style>
+      .slide-in {
+        animation: slideIn 0.5s ease-in-out forwards;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      #splash .logo {
+        width: 100.55px;
+        height: 79px;
+        position: absolute;
+        top: 383px;
+        left: 144.73px;
+      }
+    </style>
   </head>
   <body>
-    <div class="phone-frame">
+    <!-- 스플래시 화면 -->
+    <div id="splash" class="splash-screen" style="display: none">
+      <img src="assets/images/logo.png" alt="Logo" class="logo" />
+    </div>
+
+    <div class="phone-frame" id="mainContent">
       <div class="scrollable-content">
         <div class="header">
           <img
@@ -38,7 +66,8 @@
           <p>
             당신은 말이 많지만, 핵심이 약한 유형입니다.<br />
             경험을 멋있게 말하고 싶어 하지만,<br />
-            정작 무엇이 대단한 건지 명확하게 전달되지 않을 때가 있습니다.
+            정작 무엇이 대단한 건지 명확하게<br />
+            전달되지 않을 때가 있습니다.
           </p>
           <p>
             당신의 말에는 진심이 담겨 있지만,<br />
@@ -52,20 +81,18 @@
 
         <section class="tip-section">
           <h2>
-            두루뭉술 낭만가형을 위한<br /><span class="highlight"
-              >업비트 면접 TIP!</span
-            >
+            두루뭉술 낭만가형을 위한<br />
+            <b>업빗의 면접 TIP!</b>
           </h2>
           <div class="tip-box">
             <p>
-              <strong
-                >당신의 말은 따뜻하지만,<br />지금은 구체적인 근거가
-                필요합니다.</strong
-              >
+              "당신의 말은 따뜻하지만,<br />
+              지금은 구체적인 근거가 필요합니다."
             </p>
             <div class="structure-btn">말에 "구조"를 입히세요.</div>
             <p>
-              경험은 상황(S)-행동(A)-결과(R) 순으로 정리하고,<br />
+              경험은 상황(S)-행동(A)-결과(R)<br />
+              순으로 정리하고,<br />
               직무와 연결 짓는 문장을 꼭 넣어보세요.<br />
               말의 감정은 유지하되,<br />
               '구체성'이 들어가야 설득됩니다.
@@ -74,8 +101,8 @@
         </section>
 
         <section class="buttons">
-          <button onclick="goToPractice()">면접 연습 하러 가기</button>
-          <button onclick="goToAllTypes()">모든 결과 유형 보러 가기</button>
+          <button onclick="goToAllResults()">모든 결과유형 보러가기</button>
+          <button onclick="goToPractice()">면접 연습하러 가기</button>
         </section>
       </div>
 
@@ -89,18 +116,6 @@
       </footer>
     </div>
 
-    <script>
-      function goToPractice() {
-        window.location.href = "test.html";
-      }
-
-      function goToAllTypes() {
-        window.location.href = "result-all.html";
-      }
-
-      function goHome() {
-        window.location.href = "mainpage.html";
-      }
-    </script>
+    <script src="js/result-type.js"></script>
   </body>
 </html>
