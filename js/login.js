@@ -4,6 +4,7 @@ import { getToken } from "./api/config.js";
 const BASE_URL = "http://52.78.187.191:8080";
 
 document.addEventListener("DOMContentLoaded", () => {
+  const splashWrapper = document.getElementById("splash-wrapper");
   const splashScreen = document.getElementById("splash");
   const loginContent = document.getElementById("loginContent");
   const loginForm = document.getElementById("loginForm");
@@ -14,15 +15,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const idError = document.getElementById("idError");
   const pwError = document.getElementById("pwError");
 
-  // 초기 스플래시 화면 표시 후 로그인 화면으로 전환 (2초)
+  // ✅ 초기 스플래시 화면 표시 후 로그인 화면으로 전환
   setTimeout(() => {
     splashScreen.style.opacity = "0";
+
     setTimeout(() => {
-      splashScreen.style.display = "none";
+      if (splashWrapper) splashWrapper.remove(); // splash 완전 제거
       loginContent.style.display = "block";
       loginContent.style.opacity = "1";
-    }, 300);
-  }, 2000);
+    }, 300); // fade out duration
+  }, 2000); // splash delay
 
   // 입력 필드 변경 감지
   function checkInputs() {
@@ -56,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "signup.html";
   });
 
-  // 로그인 폼 제출 시
+  // ✅ 로그인 폼 제출 시
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     clearErrors();
@@ -81,11 +83,17 @@ document.addEventListener("DOMContentLoaded", () => {
         // 로그인 화면 페이드 아웃
         loginContent.style.opacity = "0";
 
-        // 스플래시 화면 표시
-        splashScreen.style.display = "flex";
-        splashScreen.style.opacity = "1";
+        // ✅ splash-wrapper 다시 만들어서 붙이기
+        const splashWrapperEl = document.createElement("div");
+        splashWrapperEl.id = "splash-wrapper";
+        splashWrapperEl.innerHTML = `
+          <div id="splash" class="splash-screen">
+            <img src="assets/images/logo.png" alt="Logo" class="logo" />
+          </div>
+        `;
+        document.body.appendChild(splashWrapperEl);
 
-        // 2초 후 메인페이지로 이동
+        // ✅ 로딩 효과 주기
         setTimeout(() => {
           window.location.href = "mainpage.html";
         }, 2000);
@@ -93,11 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data.message.includes("존재하지 않는")) {
           showError(userIdInput, idError, "존재하지 않는 아이디입니다.");
         } else {
-          showError(
-            passwordInput,
-            pwError,
-            "입력한 비밀번호가 일치하지 않습니다."
-          );
+          showError(passwordInput, pwError, "입력한 비밀번호가 일치하지 않습니다.");
         }
       }
     } catch (error) {
