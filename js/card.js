@@ -10,7 +10,7 @@ if (!cardId || !token) {
 // 카드 불러오기
 async function fetchCardData() {
   try {
-    const res = await fetch(`http://52.78.187.191:8080/api/cards/${cardId}/show`, {
+    const res = await fetch(`https://upbeat.io.kr/api/cards/${cardId}/show`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
@@ -91,7 +91,7 @@ async function fetchCardData() {
 // 전략 선택 처리
 async function handleStrategySelect(strategyText, buttonEl) {
   try {
-    const res = await fetch(`http://52.78.187.191:8080/api/cards/${cardId}/strategy`, {
+    const res = await fetch(`https://upbeat.io.kr/api/cards/${cardId}/strategy`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -137,7 +137,7 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
   if (!content) return alert("내용을 입력해주세요.");
 
   try {
-    const res = await fetch(`http://52.78.187.191:8080/api/cards/${cardId}/answer`, {
+    const res = await fetch(`https://upbeat.io.kr/api/cards/${cardId}/answer`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -159,8 +159,8 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
 async function toggleLike(answerId, btnEl) {
   const liked = btnEl.getAttribute("data-liked") === "true";
   const url = liked
-    ? `http://52.78.187.191:8080/api/cards/${cardId}/likeCancel/${answerId}`
-    : `http://52.78.187.191:8080/api/cards/${cardId}/like`;
+    ? `https://upbeat.io.kr/api/cards/${cardId}/likeCancel/${answerId}`
+    : `https://upbeat.io.kr/api/cards/${cardId}/like`;
   const method = liked ? "DELETE" : "POST";
 
   try {

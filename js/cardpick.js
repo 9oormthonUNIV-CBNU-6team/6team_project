@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	}
 
 	try {
-		const response = await fetch("http://52.78.187.191:8080/api/cards/cardinfo", {
+		const response = await fetch("https://upbeat.io.kr/api/cards/cardinfo", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",

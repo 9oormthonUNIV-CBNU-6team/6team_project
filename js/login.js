@@ -2,7 +2,7 @@ import { loadSplash } from "./splash-loader.js";
 import { login as loginApi } from "./api/auth.js";
 import { getToken } from "./api/config.js";
 
-const BASE_URL = "http://52.78.187.191:8080";
+const BASE_URL = "https://upbeat.io.kr";
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadSplash(); // splash 불러오기
