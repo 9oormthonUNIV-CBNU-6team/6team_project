@@ -13,6 +13,8 @@ async function fetchQuestions() {
     displayQuestion();
   } catch (error) {
     console.error("질문을 가져오는데 실패했습니다:", error);
+	alert("질문을 이미 답변하셨습니다.")
+	window.location.href = "mainpage.html";
   }
 }
 
