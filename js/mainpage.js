@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	function confirmLogout() {
 		removeToken();
 		localStorage.clear();
-		window.location.href = "login.html";
+		window.location.href = "index.html";
 	}
 
 	// 이벤트 리스너 등록
@@ -49,5 +49,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function goToLogin() {
-	window.location.href = "login.html";
+	window.location.href = "index.html";
 }

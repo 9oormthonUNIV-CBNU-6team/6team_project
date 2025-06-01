@@ -12,7 +12,7 @@ function checkRequiredFields() {
 
 // X 버튼 눌렀을 때 login.html 이동
 document.querySelector('.close-button').addEventListener('click', function () {
-	window.location.href = 'login.html';
+	window.location.href = 'index.html';
 });
 
 // 실시간 입력 감지

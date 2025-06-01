@@ -4,7 +4,7 @@ const token = localStorage.getItem("token");
 
 if (!cardId || !token) {
   alert("로그인이 필요하거나 카드가 선택되지 않았습니다.");
-  location.href = "login.html";
+  location.href = "index.html";
 }
 
 // 카드 불러오기
