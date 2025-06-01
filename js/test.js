@@ -1,4 +1,4 @@
-const BASE_URL = "http://52.78.187.191:8080";
+const BASE_URL = "www.upbeat.io.kr";
 let currentQuestionIndex = 0;
 let questions = [];
 let token = localStorage.getItem("token");

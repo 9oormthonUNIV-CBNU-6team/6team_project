@@ -34,7 +34,7 @@ document.getElementById('signupForm').addEventListener('submit', async function 
 	console.log("보내는 데이터:", data);
 
 	try {
-		const res = await fetch('http://52.78.187.191:8080/api/users/signup', {
+		const res = await fetch('www.upbeat.io.kr/api/users/signup', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(data)
