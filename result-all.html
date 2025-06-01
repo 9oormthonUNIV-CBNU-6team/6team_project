@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>upbeat</title>
+    <link rel="icon" href="assets/images/logo-red.png" type="image/png" />
+    <link rel="stylesheet" href="assets/css/result-all.css" />
+    <link rel="stylesheet" href="assets/css/splash.css" />
+    <style>
+      .slide-in {
+        animation: slideIn 0.5s ease-in-out forwards;
+      }
+
+      .slide-out {
+        animation: slideOut 0.5s ease-in-out forwards;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideOut {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(100%);
+        }
+      }
+
+      .back-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        z-index: 10;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone-frame" id="mainContent">
+      <div class="scrollable-content">
+        <div class="header">
+          <img
+            src="assets/images/go-back.png"
+            alt="뒤로가기"
+            class="back-btn"
+            onclick="goBackWithAnimation()"
+          />
+          <img
+            src="assets/images/upbeat-logo.png"
+            alt="upbeat logo"
+            class="logo"
+          />
+        </div>
+
+        <section class="all-results">
+          <div class="result-card">
+            <p class="subtext">말은 열정 넘치는데, 이 사람, 말이 좀 많네...</p>
+            <h2 class="result-type">" 두루뭉술 낭만가형 "</h2>
+            <img
+              src="assets/images/result-test-romance.png"
+              alt="두루뭉술 낭만가형"
+            />
+          </div>
+          <hr class="divider" />
+
+          <div class="result-card">
+            <p class="subtext">틀린 말은 없는데, 더 듣고 싶진 않다...</p>
+            <h2 class="result-type">" 과묵한 논리형 "</h2>
+            <img
+              src="assets/images/result-test-logic.png"
+              alt="과묵한 논리형"
+            />
+          </div>
+          <hr class="divider" />
+
+          <div class="result-card">
+            <p class="subtext">방금 질문, 무슨 말씀이셨죠...?</p>
+            <h2 class="result-type">" 순간 멘붕러형 "</h2>
+            <img
+              src="assets/images/result-test-mental.png"
+              alt="순간 멘붕러형"
+            />
+          </div>
+          <hr class="divider" />
+
+          <div class="result-card">
+            <p class="subtext">잘 외웠다. 근데 대화는 아니야.</p>
+            <h2 class="result-type">" 시나리오 고정러형 "</h2>
+            <img
+              src="assets/images/result-test-fixed.png"
+              alt="시나리오 고정러형"
+            />
+          </div>
+          <hr class="divider" />
+
+          <div class="result-card">
+            <p class="subtext">틀릴까 봐 무서워서, 아무 말도 못 했다...</p>
+            <h2 class="result-type">" 방어적 자기검열러형 "</h2>
+            <img
+              src="assets/images/result-test-sensor.png"
+              alt="방어적 자기검열러형"
+            />
+          </div>
+          <hr class="divider" />
+
+          <div class="result-card">
+            <p class="subtext">크게 망하진 않는데, 강점도 안 보인다...</p>
+            <h2 class="result-type">" 신중한 밸런서형 "</h2>
+            <img
+              src="assets/images/result-test-balance.png"
+              alt="신중한 밸런서형"
+            />
+          </div>
+        </section>
+
+        <section class="buttons">
+          <button onclick="goBackWithAnimation()">이전으로 돌아가기</button>
+          <button onclick="goHomeWithSplash()">홈으로 가기</button>
+        </section>
+      </div>
+
+      <footer>
+        <img
+          src="assets/images/HOME.png"
+          alt="홈 아이콘"
+          class="home-icon"
+          onclick="goHomeWithSplash()"
+        />
+      </footer>
+    </div>
+
+    <script>
+      const BASE_URL = "https://upbeat.io.kr";
+      const token = localStorage.getItem("token");
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const mainContent = document.getElementById("mainContent");
+        mainContent.classList.add("slide-in");
+      });
+
+      async function goBackWithAnimation() {
+        const mainContent = document.getElementById("mainContent");
+        mainContent.classList.add("slide-out");
+
+        try {
+          const userId = getUserIdFromToken(token);
+          const response = await fetch(
+            `${BASE_URL}/api/user-answers/result/${userId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          const result = await response.json();
+          setTimeout(() => {
+            redirectToResultPage(result.name);
+          }, 500);
+        } catch (error) {
+          console.error("결과 조회 중 오류 발생:", error);
+        }
+      }
+
+      async function goHomeWithSplash() {
+        const mainContent = document.getElementById("mainContent");
+        mainContent.style.display = "none";
+
+        await loadSplash();
+
+        setTimeout(() => {
+          window.location.href = "mainpage.html";
+        }, 2000);
+      }
+
+      function redirectToResultPage(type) {
+        const resultPages = {
+          BALANCE: "result-balance.html",
+          LOGIC: "result-logic.html",
+          FIXED: "result-fixed.html",
+          MENTAL: "result-mental.html",
+          ROMANCE: "result-romance.html",
+          SENSOR: "result-sensor.html",
+        };
+
+        const resultPage = resultPages[type] || "result-balance.html";
+        window.location.href = resultPage;
+      }
+
+      function getUserIdFromToken(token) {
+        try {
+          const base64Url = token.split(".")[1];
+          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+          const jsonPayload = decodeURIComponent(
+            atob(base64)
+              .split("")
+              .map((c) => {
+                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+              })
+              .join("")
+          );
+          return JSON.parse(jsonPayload).userId;
+        } catch (error) {
+          console.error("토큰 디코딩 실패:", error);
+          return null;
+        }
+      }
+    </script>
+    <script type="module">
+      import { loadSplash } from "./js/splash-loader.js";
+      window.loadSplash = loadSplash;
+    </script>
+  </body>
+</html>

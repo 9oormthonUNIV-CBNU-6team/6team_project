@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>upbeat</title>
+    <link rel="icon" href="assets/images/logo-red.png" type="image/png" />
+    <link rel="stylesheet" href="assets/css/result-test.css" />
+    <link rel="stylesheet" href="assets/css/splash.css" />
+  </head>
+  <body>
+    <div class="phone-frame" id="mainContent">
+      <div class="scrollable-content">
+        <div class="header">
+          <img
+            src="assets/images/upbeat-logo.png"
+            alt="upbeat logo"
+            class="logo"
+          />
+        </div>
+
+        <section class="title-section">
+          <p class="subtitle">잘 외웠다. 근데 대화는 아니야.</p>
+          <h1 class="main-title">“ 시나리오 고정러형 ”</h1>
+          <img
+            src="assets/images/result-test-fixed.png"
+            alt="캐릭터 이미지"
+            class="character"
+          />
+        </section>
+
+        <section class="failure-reason">
+          <div class="reason-box">준비된<br />답변만 반복</div>
+          <div class="reason-box">즉흥적으로<br />대응 불가</div>
+          <div class="reason-box">인간적인<br />유연성 부족</div>
+        </section>
+
+        <section class="description">
+          <p>
+            당신은 너무 잘 준비해서<br />
+            오히려 자연스러움을 잃는 유형입니다.<br />
+            질문과 상관없이 외운 문장을 말하거나,<br />
+            대화를 한다기보단<br />
+            혼자만의 발표를 이어가는 경우가 많습니다.
+          </p>
+          <p>
+            면접관은 당신의 태도나 말투에서<br />
+            인위적인 느낌을 받을 수 있어요.<br />
+            말을 조심스럽게 골라 하거나<br />
+            준비한 표현을 그대로 전달하려는 모습이<br />
+            계산된 듯한 인상을 줄 수 있죠.
+          </p>
+        </section>
+
+        <section class="tip-section">
+          <h2>
+            시나리오 고정러형을 위한<br />
+            <b>업비트 면접 TIP!</b>
+          </h2>
+          <div class="tip-box">
+            <p>
+              "잘 외우는 것보다,<br />
+              잘 들리는 것이 중요합니다."
+            </p>
+            <div class="structure-btn">
+              키워드 위주로 스토리를 조립해보세요.
+            </div>
+            <p>
+              같은 내용이라도<br />
+              질문에 맞춰 말하는 방식이<br />
+              달라야 설득력이 생깁니다.<br />
+              자연스럽게 말하려면,<br />
+              스스로도 편해야 합니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="buttons">
+          <button onclick="goToAllResults()">모든 결과유형 보러가기</button>
+          <button onclick="goToPractice()">면접 연습하러 가기</button>
+        </section>
+      </div>
+
+      <footer>
+        <img
+          src="assets/images/HOME.png"
+          alt="홈 아이콘"
+          class="home-icon"
+          onclick="goHome()"
+        />
+      </footer>
+    </div>
+
+    <script type="module" src="js/result-type.js"></script>
+  </body>
+</html>

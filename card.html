@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>upbeat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/card.css" />
+</head>
+<body>
+  <div class="phone-frame">
+    <header class="card-header">
+      <img src="assets/images/go-back.png" class="go-back" onclick="location.href='cardpick.html'" />
+      <h1>면접 카드 게임</h1>
+      <img src="assets/images/card-detail.png" class="card-detail" onclick="toggleModal()" />
+    </header>
+
+    <main class="card-content">
+      <div class="card-tags">
+        <span class="tag" id="company"></span> | <span class="tag" id="position"></span>
+        <div class="keywords" id="keywords"></div>
+      </div>
+
+      <div class="question-box" id="question">질문 로딩 중...</div>
+
+      <div class="option-list" id="options"></div>
+
+      <div class="comment-section hidden" id="commentSection">
+        <label>저라면 이렇게 답변할래요!</label>
+        <textarea maxlength="30" oninput="updateCharCount()" id="userComment"></textarea>
+        <div class="comment-count" id="charCount">0/30</div>
+        <button class="submit-btn" id="submitBtn">작성하기</button>
+      </div>
+
+      <div class="comment-list hidden" id="commentList">로딩 중...</div>
+      <button class="submit-btn" onclick="location.href='cardpick.html'">다른 카드 뽑으러 가기</button>
+    </main>
+
+    <div class="bottom-fixed">
+      <div class="bottom-divider"></div>
+      <a href="mainpage.html"><img src="assets/images/HOME.png" class="home-btn" /></a>
+    </div>
+
+    <button class="floating-btn" onclick="location.href='cardmake.html'">
+      <img src="assets/images/card-make.png" alt="카드 등록" /><br />
+      <span class="floating-label">카드 등록</span>
+    </button>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="toggleModal()"></div>
+    <div class="card-modal" id="cardModal">
+      <h2>카드 세부 정보</h2>
+      <div class="detail-row"><strong>질문 내용</strong><p id="modalQuestion"></p></div>
+      <div class="detail-row"><strong>기업명</strong><span id="modalCompany"></span></div>
+      <div class="detail-row"><strong>직무</strong><span id="modalPosition"></span></div>
+      <div class="detail-row"><strong>상황 키워드</strong><div id="modalKeywords"></div></div>
+      <div class="detail-row"><strong>답변 전략 (선택)</strong><div id="modalStrategy"></div></div>
+      <div class="detail-row"><strong>답변 내용 (선택)</strong><p id="modalAnswer"></p></div>
+      <button class="close-btn" onclick="toggleModal()">창 닫기</button>
+    </div>
+  </div>
+
+  <script src="js/card.js"></script>
+</body>
+</html>

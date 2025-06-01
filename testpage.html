@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>답변 좋아요</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #fffaf8;
+      padding: 20px;
+    }
+
+    .answer-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .answer-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .answer-content {
+      font-size: 14px;
+      white-space: pre-line;
+      margin-bottom: 12px;
+    }
+
+    .answer-footer {
+      display: flex;
+      justify-content: flex-end; /* 좋아요 오른쪽 정렬 */
+      align-items: center;
+    }
+
+    .like-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .like-btn img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .like-btn:disabled {
+      cursor: default;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="answerList">로딩 중...</div>
+
+  <script>
+    const cardId = 123;
+    const likeKey = `liked-answers-${cardId}`;
+    const answers = [
+      {
+        answerId: 1,
+        userNickname: "럭키님",
+        content: `저는 성장하는 자세가 강점입니다.`,
+        createdAt: "2025-05-17T14:32:00",
+        likes: 21
+      },
+      {
+        answerId: 2,
+        userNickname: "삐요님",
+        content: `저는 빠른 실행력과 추진력이 강점입니다.`,
+        createdAt: "2025-05-17T10:10:00",
+        likes: 11
+      }
+    ];
+
+    const likedAnswers = new Set(JSON.parse(localStorage.getItem(likeKey) || '[]'));
+    const container = document.getElementById("answerList");
+    container.innerHTML = '';
+
+    answers.forEach((answer, index) => {
+      const card = document.createElement('div');
+      card.className = 'answer-card';
+
+      const likeBtnId = `like-btn-${index}`;
+      const likeImgId = `like-img-${index}`;
+      const likeCountId = `like-count-${index}`;
+      const isLiked = likedAnswers.has(answer.answerId);
+
+      card.innerHTML = `
+        <div class="answer-header">
+          <span><strong>${answer.userNickname}</strong></span>
+          <span>${formatDate(answer.createdAt)}</span>
+        </div>
+        <div class="answer-content">${answer.content}</div>
+        <div class="answer-footer">
+          <button class="like-btn" id="${likeBtnId}" onclick="handleLike(${cardId}, ${answer.answerId}, '${likeBtnId}', '${likeImgId}', '${likeCountId}')" ${isLiked ? 'disabled' : ''}>
+            <img src="assets/images/${isLiked ? 'like-after' : 'like-before'}.png" id="${likeImgId}" alt="like">
+            <span id="${likeCountId}">${answer.likes + (isLiked ? 1 : 0)}</span>
+          </button>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr);
+      return `${String(d.getFullYear()).slice(2)}.${(d.getMonth()+1).toString().padStart(2,'0')}.${d.getDate().toString().padStart(2,'0')}`;
+    }
+
+    async function handleLike(cardId, answerId, btnId, imgId, countId) {
+      if (likedAnswers.has(answerId)) return;
+
+      try {
+        const res = await fetch(`/api/cards/${cardId}/like`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ answerId })
+        });
+
+        if (!res.ok) throw new Error('좋아요 실패');
+
+        document.getElementById(imgId).src = 'assets/images/like-after.png';
+        document.getElementById(countId).textContent = parseInt(document.getElementById(countId).textContent) + 1;
+        document.getElementById(btnId).disabled = true;
+
+        likedAnswers.add(answerId);
+        localStorage.setItem(likeKey, JSON.stringify([...likedAnswers]));
+      } catch (err) {
+        alert('좋아요 실패: ' + err.message);
+      }
+    }
+  </script>
+
+</body>
+</html>

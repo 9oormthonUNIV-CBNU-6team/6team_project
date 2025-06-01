@@ -1,0 +1,384 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #fffaf8;
+	font-family: Arial, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.phone-frame {
+	width: 375px;
+	height: 812px;
+	border: 1px solid #ccc;
+	border-radius: 40px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	background: #faf9f6;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.card-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 16px;
+	background: white;
+}
+
+.card-header h1 {
+	font-size: 16px;
+	font-weight: bold;
+	color: #ff6b6b;
+	margin: 0;
+}
+
+.card-header img {
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+}
+
+.card-content {
+	padding: 16px;
+	flex: 1;
+	overflow-y: auto;
+}
+
+.card-tags {
+	font-size: 12px;
+	color: #444;
+	margin-bottom: 8px;
+}
+
+.divider {
+	height: 1px;
+	background-color: #e0e0e0;
+	margin: 10px 0 24px;
+	width: 100%;
+}
+
+.keywords {
+	margin: 6px 0;
+}
+
+.keywords span {
+	background: #ff6b6b;
+	color: white;
+	padding: 4px 8px;
+	border-radius: 10px;
+	margin-right: 4px;
+	font-size: 11px;
+}
+
+.question-box {
+	background: #ffe6e1;
+	padding: 20px;
+	border-radius: 12px;
+	text-align: center;
+	font-size: 15px;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 20px;
+}
+
+.option-list button {
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	background: #f8f5f2;
+	border: none;
+	border-radius: 8px;
+	padding: 12px;
+	margin-bottom: 8px;
+	font-size: 14px;
+	cursor: pointer;
+	z-index: 1;
+}
+
+
+.option-button .bar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 0%;
+	background-color: #a7d1ff;
+	opacity: 0.3;
+	border-radius: 8px 0 0 8px;
+	transition: width 0.3s ease;
+	z-index: 0;
+}
+
+.option-button.selected .bar {
+	background-color: #a7d1ff;
+	opacity: 0.3;
+}
+
+.option-button.unselected .bar {
+	background-color: #e0ddd8;
+	opacity: 0.2;
+}
+
+.option-list button span {
+	color: #333;
+	position: relative;
+	z-index: 1;
+}
+
+.option-list button .percent {
+	font-weight: bold;
+	font-size: 13px;
+	color: #555;
+	display: none;
+}
+
+.option-list.show-percent .percent {
+	display: inline-block;
+}
+
+.submit-btn {
+	width: 100%;
+	background: #ff6b6b;
+	border: none;
+	color: white;
+	padding: 12px;
+	margin-top: 10px;
+	border-radius: 12px;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+/* textarea */
+.comment-section {
+	margin-top: 16px;
+}
+
+.comment-section textarea {
+	width: 100%;
+	height: 80px;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+	padding: 8px;
+	resize: none;
+	box-sizing: border-box;
+}
+
+.comment-section .submit-btn {
+	width: 100%;
+	background: #ff6b6b;
+	border: none;
+	color: white;
+	padding: 12px;
+	margin-top: 10px;
+	border-radius: 12px;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.comment-count {
+	text-align: right;
+	font-size: 11px;
+	color: #aaa;
+	margin-top: 4px;
+}
+
+.submit-btn:disabled {
+	background: #ccc;
+	cursor: not-allowed;
+}
+
+/* 댓글 리스트 */
+.answer-card {
+	background: #fff;
+	border-radius: 12px;
+	padding: 16px;
+	margin-bottom: 12px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.answer-header {
+	display: flex;
+	justify-content: space-between;
+	font-size: 13px;
+	margin-bottom: 8px;
+}
+
+.answer-content {
+	font-size: 14px;
+	white-space: pre-line;
+	margin-bottom: 12px;
+}
+
+.answer-footer {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.like-btn {
+	background: none;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 14px;
+	color: #555;
+}
+
+.like-btn img {
+	width: 16px;
+	height: 16px;
+}
+
+.like-btn:disabled {
+	cursor: default;
+	opacity: 0.6;
+}
+
+/* 하단 바 */
+.bottom-fixed {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+}
+
+.bottom-divider {
+	height: 1px;
+	background: #ccc;
+}
+
+.home-btn {
+	width: 48px;
+	margin: 10px 0;
+}
+
+/* 카드 등록 버튼 */
+.floating-btn {
+	position: absolute;
+	bottom: 80px;
+	right: 20px;
+	background: white;
+	border-radius: 50%;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	width: 60px;
+	height: 60px;
+	border: none;
+	cursor: pointer;
+	padding-top: 6px;
+}
+
+.floating-btn img {
+	width: 24px;
+	height: 24px;
+}
+
+.floating-label {
+	font-size: 11px;
+	color: #FF6B6B;
+	margin-top: 2px;
+	line-height: 1;
+}
+
+/* 카드 상세 정보 */
+.modal-overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.4);
+	display: none;
+	z-index: 100;
+}
+
+.modal-overlay.active {
+	display: block;
+}
+
+.card-modal {
+	position: absolute;
+	bottom: -100%;
+	left: 0;
+	right: 0;
+	width: 90%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: white;
+	border-radius: 24px 24px 0 0;
+	padding: 20px;
+	transition: bottom 0.3s ease;
+	z-index: 101;
+}
+
+.card-modal.active {
+	bottom: 0;
+}
+
+.card-modal h2 {
+	color: #ff6b6b;
+	font-size: 18px;
+	margin-bottom: 16px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.detail-row {
+	margin-bottom: 14px;
+	font-size: 14px;
+	color: #333;
+}
+
+.detail-row strong {
+	display: block;
+	margin-bottom: 6px;
+	color: #444;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.detail-row span,
+.detail-row p {
+	display: inline-block;
+	background: #f2f0ed;
+	padding: 8px 12px;
+	border-radius: 12px;
+	font-size: 13px;
+	color: #444;
+	margin: 4px 6px 0 0;
+	line-height: 1.4;
+}
+
+.detail-row .tag {
+	background: #ff6b6b;
+	color: white;
+	padding: 6px 12px;
+	border-radius: 20px;
+	font-size: 12px;
+	display: inline-block;
+	margin-right: 6px;
+	margin-top: 4px;
+}
+
+.close-btn {
+	width: 100%;
+	background: #ff6b6b;
+	color: white;
+	padding: 14px;
+	border: none;
+	border-radius: 16px;
+	font-size: 16px;
+	margin-top: 20px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.hidden {
+	display: none;
+}
