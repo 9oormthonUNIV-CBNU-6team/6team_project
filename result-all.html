@@ -46,10 +46,9 @@
     </style>
   </head>
   <body>
-    <div id="splash-wrapper" style="display: none">
-      <div id="splash" class="splash-screen">
-        <img src="assets/images/logo.png" alt="Logo" class="logo" />
-      </div>
+    <!-- 스플래시 화면 -->
+    <div id="splash" style="display: none">
+      <img src="assets/images/logo.png" alt="Logo" class="logo" />
     </div>
 
     <div class="phone-frame" id="mainContent">
@@ -179,12 +178,14 @@
       }
 
       function goHomeWithSplash() {
-        const mainContent = document.getElementById("mainContent");
-        const splashWrapper = document.getElementById("splash-wrapper");
+        // 메인 컨텐츠 숨기기
+        document.getElementById("mainContent").style.display = "none";
 
-        mainContent.style.display = "none";
-        splashWrapper.style.display = "flex";
+        // 스플래시 화면 표시
+        const splash = document.getElementById("splash");
+        splash.style.display = "flex";
 
+        // 2초 후 메인페이지로 이동
         setTimeout(() => {
           window.location.href = "mainpage.html";
         }, 2000);
