@@ -1,23 +1,25 @@
-function goToAllResults() {
+import { loadSplash } from "./splash-loader.js";
+
+async function goToAllResults() {
   window.location.href = "result-all.html";
 }
 
-function goToPractice() {
+async function goToPractice() {
   const mainContent = document.getElementById("mainContent");
-  const splash = document.getElementById("splash");
-
   mainContent.style.display = "none";
-  splash.style.display = "flex";
 
-  const logo = splash.querySelector(".logo");
-  logo.style.width = "100.55px";
-  logo.style.height = "79px";
+  await loadSplash();
 
   setTimeout(() => {
     window.location.href = "card.html";
   }, 2000);
 }
 
-function goHome() {
+async function goHome() {
   window.location.href = "mainpage.html";
 }
+
+// 전역 스코프에서 함수들을 사용할 수 있도록 export
+window.goToAllResults = goToAllResults;
+window.goToPractice = goToPractice;
+window.goHome = goHome;
