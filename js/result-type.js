@@ -11,7 +11,7 @@ async function goToPractice() {
   await loadSplash();
 
   setTimeout(() => {
-    window.location.href = "card.html";
+    window.location.href = "cardpick.html";
   }, 2000);
 }
 
