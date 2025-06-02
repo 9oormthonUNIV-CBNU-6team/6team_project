@@ -7,7 +7,7 @@ function goToAllResults() {
 
 // 면접 연습 페이지로 이동
 function goToPractice() {
-  window.location.href = "../card.html";
+  window.location.href = "../cardpick.html";
 }
 
 // 홈으로 이동

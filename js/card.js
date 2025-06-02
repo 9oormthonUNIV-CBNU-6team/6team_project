@@ -150,13 +150,23 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
       },
       body: JSON.stringify({ content, cardId: parseInt(cardId) })
     });
+
     const result = await res.json();
     alert(result.message);
 
     document.getElementById("userComment").value = "";
     updateCharCount();
 
-    // 작성한 후에 캐시된 댓글 표시
+    // 댓글 캐시에 추가 (응답값에 id가 없으면 가상의 ID 할당)
+    cachedAnswers.push({
+      answerId: result.answerId || Date.now(),
+      content: content,
+      createdAt: new Date().toISOString(),
+      likes: 0,
+      userId: result.userId || 0,
+      userNickname: result.userNickname || "나"
+    });
+
     renderAnswers(cachedAnswers);
   } catch (err) {
     alert("답변 등록 실패");
