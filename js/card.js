@@ -31,6 +31,7 @@ async function fetchCardData() {
     document.getElementById("company").innerText = data.companyName;
     document.getElementById("position").innerText = data.job;
     document.getElementById("keywords").innerHTML = data.status.map(k => `<span>${k}</span>`).join('');
+	document.getElementById("commentList").classList.add("hidden");
 
     // 전략 버튼들 고정 렌더링
     renderStrategyButtons();
@@ -107,8 +108,15 @@ async function handleStrategySelect(strategyText, buttonEl) {
 
 function renderAnswers(answers) {
   const list = document.getElementById("commentList");
+
+  if (!answers || answers.length === 0) {
+    list.classList.add("hidden");
+    return;
+  }
+
   list.classList.remove("hidden");
   list.innerHTML = "";
+
   answers.forEach(answer => {
     const card = document.createElement("div");
     card.className = "answer-card";
