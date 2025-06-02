@@ -13,6 +13,8 @@ const STRATEGY_LIST = [
   "질문 재확인 후 답변"
 ];
 
+let cachedAnswers = [];
+
 async function fetchCardData() {
   try {
     const res = await fetch(`https://upbeat.io.kr/api/cards/${cardId}/show`, {
@@ -40,7 +42,7 @@ async function fetchCardData() {
     document.getElementById("modalStrategy").innerHTML = `<span class="tag">${data.strategy}</span>`;
     document.getElementById("modalAnswer").innerText = data.answerContent;
 
-    // 댓글은 처음에는 무조건 숨김
+    cachedAnswers = data.answers || [];
     document.getElementById("commentList").classList.add("hidden");
   } catch (err) {
     console.error("카드 불러오기 실패:", err);
@@ -135,7 +137,6 @@ function renderAnswers(answers) {
   });
 }
 
-// 댓글 작성 → 등록 + 댓글 목록 fetch + 표시
 document.getElementById("submitBtn").addEventListener("click", async () => {
   const content = document.getElementById("userComment").value.trim();
   if (!content) return alert("내용을 입력해주세요.");
@@ -155,15 +156,8 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     document.getElementById("userComment").value = "";
     updateCharCount();
 
-    // 댓글 작성 후에만 댓글 리스트 요청
-    const answerRes = await fetch(`https://upbeat.io.kr/api/cards/${cardId}/answers`, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-    });
-    const answerData = await answerRes.json();
-    renderAnswers(answerData);
+    // 작성한 후에 캐시된 댓글 표시
+    renderAnswers(cachedAnswers);
   } catch (err) {
     alert("답변 등록 실패");
   }
@@ -211,5 +205,4 @@ function toggleModal() {
   document.getElementById('cardModal').classList.toggle('active');
 }
 
-// 시작 시 실행
 fetchCardData();
