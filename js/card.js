@@ -26,17 +26,13 @@ async function fetchCardData() {
 
     const data = await res.json();
 
-    // 질문 및 메타정보 표시
     document.getElementById("question").innerText = data.questionContent;
     document.getElementById("company").innerText = data.companyName;
     document.getElementById("position").innerText = data.job;
     document.getElementById("keywords").innerHTML = data.status.map(k => `<span>${k}</span>`).join('');
-	document.getElementById("commentList").classList.add("hidden");
 
-    // 전략 버튼들 고정 렌더링
     renderStrategyButtons();
 
-    // 모달 정보 표시
     document.getElementById("modalQuestion").innerText = data.questionContent;
     document.getElementById("modalCompany").innerText = data.companyName;
     document.getElementById("modalPosition").innerText = data.job;
@@ -44,7 +40,8 @@ async function fetchCardData() {
     document.getElementById("modalStrategy").innerHTML = `<span class="tag">${data.strategy}</span>`;
     document.getElementById("modalAnswer").innerText = data.answerContent;
 
-    renderAnswers(data.answers);
+    // 댓글은 처음에는 무조건 숨김
+    document.getElementById("commentList").classList.add("hidden");
   } catch (err) {
     console.error("카드 불러오기 실패:", err);
     alert("카드 정보를 불러오지 못했습니다.");
@@ -82,6 +79,7 @@ function renderStrategyButtons() {
         b.classList.add(b === btn ? 'selected' : 'unselected');
         b.disabled = true;
       });
+
       document.getElementById("commentSection").classList.remove("hidden");
     };
 
@@ -108,6 +106,7 @@ async function handleStrategySelect(strategyText, buttonEl) {
 
 function renderAnswers(answers) {
   const list = document.getElementById("commentList");
+  list.innerHTML = "";
 
   if (!answers || answers.length === 0) {
     list.classList.add("hidden");
@@ -115,7 +114,6 @@ function renderAnswers(answers) {
   }
 
   list.classList.remove("hidden");
-  list.innerHTML = "";
 
   answers.forEach(answer => {
     const card = document.createElement("div");
@@ -137,6 +135,7 @@ function renderAnswers(answers) {
   });
 }
 
+// 댓글 작성 → 등록 + 댓글 목록 fetch + 표시
 document.getElementById("submitBtn").addEventListener("click", async () => {
   const content = document.getElementById("userComment").value.trim();
   if (!content) return alert("내용을 입력해주세요.");
@@ -152,9 +151,19 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     });
     const result = await res.json();
     alert(result.message);
+
     document.getElementById("userComment").value = "";
     updateCharCount();
-    fetchCardData();
+
+    // 댓글 작성 후에만 댓글 리스트 요청
+    const answerRes = await fetch(`https://upbeat.io.kr/api/cards/${cardId}/answers`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    const answerData = await answerRes.json();
+    renderAnswers(answerData);
   } catch (err) {
     alert("답변 등록 실패");
   }
@@ -202,4 +211,5 @@ function toggleModal() {
   document.getElementById('cardModal').classList.toggle('active');
 }
 
+// 시작 시 실행
 fetchCardData();
