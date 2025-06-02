@@ -4,6 +4,7 @@ import { getToken } from "./api/config.js";
 
 const BASE_URL = "https://upbeat.io.kr";
 
+
 document.addEventListener("DOMContentLoaded", async () => {
   await loadSplash(); // splash 불러오기
 
@@ -75,7 +76,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (response.ok) {
         localStorage.setItem("token", data.token);
-
+        localStorage.setItem("userId", data.userId);
         // splash 재사용
         await loadSplash();
 
