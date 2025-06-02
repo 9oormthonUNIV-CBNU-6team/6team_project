@@ -1,4 +1,3 @@
-// 기본값 준비
 const cardId = localStorage.getItem("selectedCardId");
 const token = localStorage.getItem("token");
 
@@ -7,7 +6,15 @@ if (!cardId || !token) {
   location.href = "index.html";
 }
 
-// 카드 불러오기
+const STRATEGY_LIST = [
+  "공손하게 회피",
+  "정면 돌파",
+  "유머 활용",
+  "질문 재확인 후 답변"
+];
+
+let cachedAnswers = [];
+
 async function fetchCardData() {
   try {
     const res = await fetch(`https://upbeat.io.kr/api/cards/${cardId}/show`, {
@@ -21,59 +28,13 @@ async function fetchCardData() {
 
     const data = await res.json();
 
-    // 질문 및 메타정보 표시
     document.getElementById("question").innerText = data.questionContent;
     document.getElementById("company").innerText = data.companyName;
     document.getElementById("position").innerText = data.job;
     document.getElementById("keywords").innerHTML = data.status.map(k => `<span>${k}</span>`).join('');
 
-    // 전략 버튼들 렌더링 (기본 전략 포함)
-    const options = document.getElementById("options");
-    options.innerHTML = "";
+    renderStrategyButtons();
 
-    let strategies = data.strategies;
-    if (!strategies || strategies.length === 0) {
-      strategies = [
-        { strategy: "공손하게 회피", userNickname: "기본 전략" },
-        { strategy: "정면 돌파", userNickname: "기본 전략" },
-        { strategy: "유머 활용", userNickname: "기본 전략" },
-        { strategy: "질문 재확인 후 답변", userNickname: "기본 전략" },
-      ];
-    }
-
-    // 임의 percent 생성
-    const raw = strategies.length;
-    const percents = Array(raw).fill(0).map(() => Math.floor(Math.random() * 25 + 10));
-    const total = percents.reduce((a, b) => a + b, 0);
-    const scaled = percents.map(p => Math.round((p / total) * 100));
-    const adjusted = scaled.map((p, i) => i === raw - 1 ? 100 - scaled.slice(0, -1).reduce((a, b) => a + b, 0) : p);
-
-    strategies.forEach((strategy, index) => {
-      const percent = adjusted[index];
-      const btn = document.createElement("button");
-      btn.className = "option-button";
-      btn.innerHTML = `
-        <div class="bar" style="width: 0%"></div>
-        <span>${strategy.userNickname}: ${strategy.strategy}</span>
-        <span class="percent">${percent}%</span>
-      `;
-
-      btn.onclick = async () => {
-        await handleStrategySelect(strategy.strategy, btn);
-
-        options.classList.add("show-percent");
-        document.querySelectorAll('.option-list button').forEach((b, i) => {
-          b.querySelector('.bar').style.width = `${adjusted[i]}%`;
-          b.classList.add(b === btn ? 'selected' : 'unselected');
-          b.disabled = true;
-        });
-        document.getElementById("commentSection").classList.remove("hidden");
-      };
-
-      options.appendChild(btn);
-    });
-
-    // 모달 정보 표시
     document.getElementById("modalQuestion").innerText = data.questionContent;
     document.getElementById("modalCompany").innerText = data.companyName;
     document.getElementById("modalPosition").innerText = data.job;
@@ -81,14 +42,53 @@ async function fetchCardData() {
     document.getElementById("modalStrategy").innerHTML = `<span class="tag">${data.strategy}</span>`;
     document.getElementById("modalAnswer").innerText = data.answerContent;
 
-    renderAnswers(data.answers);
+    cachedAnswers = data.answers || [];
+    document.getElementById("commentList").classList.add("hidden");
   } catch (err) {
     console.error("카드 불러오기 실패:", err);
     alert("카드 정보를 불러오지 못했습니다.");
   }
 }
 
-// 전략 선택 처리
+function renderStrategyButtons() {
+  const options = document.getElementById("options");
+  options.innerHTML = "";
+
+  const raw = STRATEGY_LIST.length;
+  const percents = Array(raw).fill(0).map(() => Math.floor(Math.random() * 25 + 10));
+  const total = percents.reduce((a, b) => a + b, 0);
+  const scaled = percents.map(p => Math.round((p / total) * 100));
+  const adjusted = scaled.map((p, i) =>
+    i === raw - 1 ? 100 - scaled.slice(0, -1).reduce((a, b) => a + b, 0) : p
+  );
+
+  STRATEGY_LIST.forEach((strategy, index) => {
+    const percent = adjusted[index];
+    const btn = document.createElement("button");
+    btn.className = "option-button";
+    btn.innerHTML = `
+      <div class="bar" style="width: 0%"></div>
+      <span>${strategy}</span>
+      <span class="percent">${percent}%</span>
+    `;
+
+    btn.onclick = async () => {
+      await handleStrategySelect(strategy, btn);
+
+      options.classList.add("show-percent");
+      document.querySelectorAll('.option-list button').forEach((b, i) => {
+        b.querySelector('.bar').style.width = `${adjusted[i]}%`;
+        b.classList.add(b === btn ? 'selected' : 'unselected');
+        b.disabled = true;
+      });
+
+      document.getElementById("commentSection").classList.remove("hidden");
+    };
+
+    options.appendChild(btn);
+  });
+}
+
 async function handleStrategySelect(strategyText, buttonEl) {
   try {
     const res = await fetch(`https://upbeat.io.kr/api/cards/${cardId}/strategy`, {
@@ -106,11 +106,17 @@ async function handleStrategySelect(strategyText, buttonEl) {
   }
 }
 
-// 답변 렌더링
 function renderAnswers(answers) {
   const list = document.getElementById("commentList");
-  list.classList.remove("hidden");
   list.innerHTML = "";
+
+  if (!answers || answers.length === 0) {
+    list.classList.add("hidden");
+    return;
+  }
+
+  list.classList.remove("hidden");
+
   answers.forEach(answer => {
     const card = document.createElement("div");
     card.className = "answer-card";
@@ -131,7 +137,6 @@ function renderAnswers(answers) {
   });
 }
 
-// 답변 등록
 document.getElementById("submitBtn").addEventListener("click", async () => {
   const content = document.getElementById("userComment").value.trim();
   if (!content) return alert("내용을 입력해주세요.");
@@ -147,15 +152,17 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     });
     const result = await res.json();
     alert(result.message);
+
     document.getElementById("userComment").value = "";
     updateCharCount();
-    fetchCardData();
+
+    // 작성한 후에 캐시된 댓글 표시
+    renderAnswers(cachedAnswers);
   } catch (err) {
     alert("답변 등록 실패");
   }
 });
 
-// 좋아요 토글
 async function toggleLike(answerId, btnEl) {
   const liked = btnEl.getAttribute("data-liked") === "true";
   const url = liked
@@ -182,24 +189,20 @@ async function toggleLike(answerId, btnEl) {
   }
 }
 
-// 날짜 포맷
 function formatDate(dateStr) {
   const d = new Date(dateStr);
   return `${String(d.getFullYear()).slice(2)}.${(d.getMonth() + 1).toString().padStart(2, '0')}.${d.getDate().toString().padStart(2, '0')}`;
 }
 
-// 글자 수 표시
 function updateCharCount() {
   const textarea = document.getElementById("userComment");
   const count = textarea.value.length;
   document.getElementById("charCount").innerText = `${count}/30`;
 }
 
-// 모달 토글
 function toggleModal() {
   document.getElementById('modalOverlay').classList.toggle('active');
   document.getElementById('cardModal').classList.toggle('active');
 }
 
-// 최초 실행
 fetchCardData();

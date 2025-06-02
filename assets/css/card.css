@@ -44,9 +44,10 @@ body {
 }
 
 .card-content {
-	padding: 16px;
-	flex: 1;
-	overflow-y: auto;
+  padding: 16px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0; /* 중요! */
 }
 
 .card-tags {
@@ -85,7 +86,7 @@ body {
 	color: #333;
 	margin-bottom: 20px;
 }
-
+/*선택지*/
 .option-list button {
 	position: relative;
 	overflow: hidden;
@@ -250,6 +251,7 @@ body {
 	bottom: 0;
 	width: 100%;
 	text-align: center;
+	background: #faf9f6;
 }
 
 .bottom-divider {
