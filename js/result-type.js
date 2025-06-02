@@ -1,25 +1,30 @@
 import { loadSplash } from "./splash-loader.js";
 
-async function goToAllResults() {
-  window.location.href = "result-all.html";
+// 모든 결과 보기 페이지로 이동
+function goToAllResults() {
+  window.location.href = "../result-all.html";
 }
 
-async function goToPractice() {
-  const mainContent = document.getElementById("mainContent");
-  mainContent.style.display = "none";
+// 면접 연습 페이지로 이동
+function goToPractice() {
+  window.location.href = "../card.html";
+}
 
+// 홈으로 이동
+async function goHome() {
+  // 메인 컨텐츠 숨기기
+  document.getElementById("mainContent").style.display = "none";
+
+  // splash 로드
   await loadSplash();
 
+  // 2초 후 메인페이지로 이동
   setTimeout(() => {
-    window.location.href = "cardpick.html";
+    window.location.href = "../mainpage.html";
   }, 2000);
 }
 
-async function goHome() {
-  window.location.href = "mainpage.html";
-}
-
-// 전역 스코프에서 함수들을 사용할 수 있도록 export
+// 전역 함수로 등록
 window.goToAllResults = goToAllResults;
 window.goToPractice = goToPractice;
 window.goHome = goHome;

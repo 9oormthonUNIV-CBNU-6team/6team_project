@@ -77,8 +77,72 @@
     <script type="module">
       import { loadSplash } from "./js/splash-loader.js";
 
-      function startTest() {
-        window.location.href = "test.html";
+      const BASE_URL = "https://upbeat.io.kr";
+
+
+      const resultPages = {
+        BALANCE: "./result/type6.html",
+        LOGIC: "./result/type2.html",
+        FIXED: "./result/type4.html",
+        MENTAL: "./result/type3.html",
+        ROMANCE: "./result/type1.html",
+        SENSOR: "./result/type5.html",
+      };
+
+      async function startTest() {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId"); // localStorage에서 직접 userId 가져오기
+
+        if (!token || !userId) {
+          console.error("토큰 또는 userId가 없습니다.");
+          alert("로그인이 필요합니다.");
+          window.location.href = "login.html";
+          return;
+        }
+
+        try {
+          console.log("결과 조회 시도...");
+          const requestUrl = `${BASE_URL}/api/user-answers/result/redirect/${userId}`;
+          console.log("API 요청 정보:", {
+            url: requestUrl,
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            userId: userId,
+          });
+
+          const response = await fetch(requestUrl, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          console.log("응답 상태:", response.status);
+
+          if (response.ok) {
+            // 200 응답: 이미 테스트 결과가 있음
+            const data = await response.json();
+            console.log("응답 데이터:", data);
+
+            if (data && data.redirectUrl) {
+              const fileName = data.redirectUrl.split("/").pop();
+              console.log("기존 결과로 리다이렉트:", fileName);
+              window.location.href = `result/${fileName}`;
+            } else {
+              console.log("리다이렉트 URL이 없어 테스트 페이지로 이동");
+              window.location.href = "test.html";
+            }
+          } else {
+            // 200이 아닌 응답: 테스트 결과가 없음
+            console.log("테스트 결과가 없어 테스트 페이지로 이동");
+            window.location.href = "test.html";
+          }
+        } catch (error) {
+          console.error("API 호출 중 오류 발생:", error);
+          window.location.href = "test.html";
+        }
       }
 
       async function goHome() {

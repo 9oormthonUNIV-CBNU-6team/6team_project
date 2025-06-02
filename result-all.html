@@ -141,7 +141,6 @@
 
     <script>
       const BASE_URL = "https://upbeat.io.kr";
-      const token = localStorage.getItem("token");
 
       document.addEventListener("DOMContentLoaded", () => {
         const mainContent = document.getElementById("mainContent");
@@ -152,24 +151,10 @@
         const mainContent = document.getElementById("mainContent");
         mainContent.classList.add("slide-out");
 
-        try {
-          const userId = getUserIdFromToken(token);
-          const response = await fetch(
-            `${BASE_URL}/api/user-answers/result/${userId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          const result = await response.json();
-          setTimeout(() => {
-            redirectToResultPage(result.name);
-          }, 500);
-        } catch (error) {
-          console.error("결과 조회 중 오류 발생:", error);
-        }
+        // 0.5초 후 이전 페이지로 이동
+        setTimeout(() => {
+          history.back();
+        }, 500);
       }
 
       async function goHomeWithSplash() {
@@ -185,35 +170,16 @@
 
       function redirectToResultPage(type) {
         const resultPages = {
-          BALANCE: "result-balance.html",
-          LOGIC: "result-logic.html",
-          FIXED: "result-fixed.html",
-          MENTAL: "result-mental.html",
-          ROMANCE: "result-romance.html",
-          SENSOR: "result-sensor.html",
+          BALANCE: "./result/type6.html",
+          LOGIC: "./result/type2.html",
+          FIXED: "./result/type4.html",
+          MENTAL: "./result/type3.html",
+          ROMANCE: "./result/type1.html",
+          SENSOR: "./result/type5.html",
         };
 
-        const resultPage = resultPages[type] || "result-balance.html";
+        const resultPage = resultPages[type];
         window.location.href = resultPage;
-      }
-
-      function getUserIdFromToken(token) {
-        try {
-          const base64Url = token.split(".")[1];
-          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-          const jsonPayload = decodeURIComponent(
-            atob(base64)
-              .split("")
-              .map((c) => {
-                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-              })
-              .join("")
-          );
-          return JSON.parse(jsonPayload).userId;
-        } catch (error) {
-          console.error("토큰 디코딩 실패:", error);
-          return null;
-        }
       }
     </script>
     <script type="module">
