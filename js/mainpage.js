@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
   gameCard.addEventListener("click", () => {
+	localStorage.removeItem("usedCards");
+	localStorage.removeItem("selectedCardId");
     window.location.href = "cardpick.html";
   });
 
